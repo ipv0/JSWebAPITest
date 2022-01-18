@@ -1,0 +1,163 @@
+body * {
+    font-family: Arial, Helvetica, sans-serif;
+    margin:0;
+    padding:0;
+}
+
+#container {
+    min-width: 800px;
+    margin: 0 auto;
+    /* display: flex; */
+}
+
+#navbar {
+    display:flex;
+    height: 55px;
+    width: 50em; 
+    background-color: rgb(209, 237, 237, 0.28);
+    border-radius: 4px;
+    margin: 0 auto;
+    border: 1px solid #304a4b17;
+    /* text-align: center; */
+}
+
+ul {
+    list-style-type: none;
+    margin: 0 auto;
+    padding: 7px 0 0 0;
+    /* margin: 0 0 0 7px; */
+}
+
+#navbar li {
+    display:flex;
+    float: left;
+    border-right: 1px solid rgba(0, 0, 0, 0.063);
+}
+
+#navbar li a {
+    color: #000000;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    text-decoration: none;
+    width: 9.5em;
+    height: 30px;
+    display: block;
+    border-radius: 5px;
+    padding-top: 12px;
+    transition: all 0.15s;
+}
+
+#navbar ul li:last-child {
+    border-right: none;
+}
+
+#navbar li a:hover {
+    background-color: hsla(157, 6%, 43%, 0.054);
+    transition: all 0.15s;
+}
+
+#navbar li a:visited {
+    color: #000;
+}
+
+.box-class {
+    width: 50em;
+    height: 400px;
+    background-color: rgb(209, 237, 237, 0.28);
+    margin: 5px auto;
+    border-radius: 4px;
+    border: 1px solid #304a4b1b;
+}
+
+.box-title-class {
+    text-align: center;
+    margin: 15px auto;
+    color: #000000;
+    font-size: 2em;
+    font-family: 'Courier New', Courier, monospace;
+
+    width: 95%;
+    padding-top: 5px;
+    border-top: 1px solid #304a4b1b;
+    border-bottom: 1px solid #304a4b1b;
+    /*background-color: rgba(209, 237, 237, 0.261);*/
+}
+
+.box-content {
+    margin: 17px;
+    padding: 2px;
+    height: auto;
+    /* border: 1px solid #304a4b1b; */
+}
+
+.hidden {
+    display:none;
+}
+
+#dialog {
+    background-color: rgba(213, 235, 235, 0.282);
+    border-color: rgb(1, 5, 5) !important;
+    box-shadow: 3px 3px 15px rgba(32, 45, 70, 0.445);
+}
+
+.button {
+    display:inline-block;
+    padding:0.5em 1.2em;
+    border:0.1em solid #000000;
+    margin:0 0.2em 0.2em 0;
+    border-radius:0.8em;
+    box-sizing: border-box;
+    text-decoration:none;
+     font-family:'Roboto',sans-serif; 
+    font-weight:500;
+    color:#000000;
+    text-shadow: 0 0.09em 0.09em rgba(0, 0, 0, 0.152);
+    background-color:#80caed36;
+    text-align:center;
+    transition: all 0.15s;
+    border-radius: 2px;
+    box-shadow: 1px 1px 5px rgba(36, 86, 119, 0.693);
+}
+
+.button:hover {
+    background-color:#4095c652;
+    cursor:pointer;
+}
+
+.button:active {
+    background-color:#4095c683;
+}
+
+
+/* Data box class for displaying
+ * short pieces of info */
+ .dataBox {
+    display: inline-block;
+    width: 7em;
+    height: 4em;
+
+    /* float: left; */
+    
+    background-color: rgb(209, 237, 237, 0.28);
+    margin: 5px 10px 5px 0; 
+    border-radius: 4px;
+    border: 1px solid #304a4b1b;
+
+    text-align: center;
+    font-size: 18px;
+    padding-top: 10px;
+    line-height: 30px;;
+ }
+
+ #loadWeatherButton {
+     display: block;
+     margin: -10px auto 20px auto;
+ }
+
+ #dataBoxesDiv {
+     /* border: 1px solid black; */
+     margin: 0 auto !important;
+     text-align: center;
+     
+ }
