@@ -132,8 +132,8 @@ function apiButtonclick() {
         createDataBox('apiBox1', 1200, 'Test1 <br /> data');
         createDataBox('apiBox2', 1400, 'Test2 <br /> data');
         createDataBox('apiBox3', 1600, 'Test3 <br /> data');
-        createDataBox('apiBox3', 1800, 'Test3 <br /> data');
-        createDataBox('apiBox3', 2000, 'Test3 <br /> data');
+        createDataBox('apiBox4', 1800, 'Test3 <br /> data');
+        createDataBox('apiBox5', 2000, 'Test3 <br /> data');
     });
 
 }
