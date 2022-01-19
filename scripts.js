@@ -4,9 +4,7 @@ let p = (text) => {
     console.log(text);
 }
 
-
 /* --- JQuery animations and stuff --- */
-
 $(document).ready(function() {
     console.log('jQuery: document ready event')
     $('#navbar').hide().fadeIn(300);
@@ -17,10 +15,6 @@ $(document).ready(function() {
 
     assignEventListeners();
 
-});
-
-$(document).ready(function () {
-    
 });
 
 /* --- Event listeners assignment --- */
@@ -48,7 +42,6 @@ let assignEventListeners = function () {
 
     if (loadWeatherButton)
         loadWeatherButton.addEventListener("click", testButtonClick);
-
 }
 
 function testButtonClick () {
