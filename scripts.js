@@ -1,7 +1,4 @@
 /* eslint-disable no-unused-vars */
-// const p = function(text) {
-//     console.log(text);
-// }
 
 let p = (text) => { 
     console.log(text);
