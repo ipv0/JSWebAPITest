@@ -1,5 +1,11 @@
 /* eslint-disable no-unused-vars */
 
+/* Object with URI's for accessing various parts of the Helium network API */
+const heliumAPI = {
+    hotspotsByName: "https://api.helium.io/v1/hotspots/name/",
+    hotspotsNameSearch: "https://api.helium.io/v1/hotspots/name?search="
+}
+
 let p = (text) => { 
     console.log(text);
 }
