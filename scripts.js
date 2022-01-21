@@ -118,7 +118,6 @@ function link5Click() {
     createBox("Google", "<a href='#'> Google </a>");
 }
 
-
 let createBox = function(boxTitle, BoxContentHTML) {
 
     $('#box').remove();
