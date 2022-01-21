@@ -45,9 +45,6 @@ let assignEventListeners = function () {
 
     link5Button.addEventListener('click', link5Click);
 
-
-    if (loadWeatherButton)
-        loadWeatherButton.addEventListener("click", testButtonClick);
 }
 
 function testButtonClick () {
@@ -56,6 +53,7 @@ function testButtonClick () {
     //$("#dialog").dialog();
 }
 
+/* Weather Button / Menu Link */ 
 function link2Click() {
     getWeatherData();
 
@@ -80,47 +78,19 @@ function link2Click() {
         createDataBox('humidityBox4', 1600, 'Test3 <br /> data');
     });
 
-    assignEventListeners();
-
-}
-
-/* 
-    PASS THE INDIVIDUAL DATA BOX CREATION FUNCTIONS INTO THE
-    CREATEDATABOXESDIV() FUNCTION BELOW.
-*/
-function createDataBoxesDiv(func) {
-    let boxContent = document.querySelector('#boxContent');
-    let dataBoxesDiv = document.createElement('div');
-   
-    dataBoxesDiv.id = 'dataBoxesDiv';
-
-    boxContent.append(dataBoxesDiv);
-
-    func();
-}
+    // assign event listener to the load weather button that appears on the weather page
+    if (loadWeatherButton)
+        loadWeatherButton.addEventListener("click", testButtonClick);
 
 
-// --- creates little boxes with given parameters and data ---
-function createDataBox(boxId, boxFadeTime, boxContentHTML) {
-
-    // the container box created by cerateDataBoxesDiv(), where the little boxes will be added. 
-    let dataBoxesDiv = document.querySelector('#dataBoxesDiv');
-
-    let dataBox = document.createElement('div');
-    dataBox.id = boxId;
-    dataBox.classList.add('dataBox');
-    dataBox.innerHTML = boxContentHTML;
-
-    dataBoxesDiv.append(dataBox);
-
-    $("#" + boxId).hide();
-    $("#" + boxId).fadeIn(boxFadeTime);
 }
 
 /* ------------------------------------------- */
 function apiButtonclick() {
     p('API Button clicked');
     /* write the rest here... */
+
+    getHeliumAPIData();
 
     createBox("API", "<p>Sample box content text.</p>");
 
@@ -178,6 +148,39 @@ let createBox = function(boxTitle, BoxContentHTML) {
 
 }
 
+/* 
+    PASS THE INDIVIDUAL DATA BOX CREATION FUNCTIONS INTO THE
+    CREATEDATABOXESDIV() FUNCTION BELOW.
+*/
+function createDataBoxesDiv(func) {
+    let boxContent = document.querySelector('#boxContent');
+    let dataBoxesDiv = document.createElement('div');
+   
+    dataBoxesDiv.id = 'dataBoxesDiv';
+
+    boxContent.append(dataBoxesDiv);
+
+    func();
+}
+
+
+// --- creates little boxes with given parameters and data ---
+function createDataBox(boxId, boxFadeTime, boxContentHTML) {
+
+    // the container box created by cerateDataBoxesDiv(), where the little boxes will be added. 
+    let dataBoxesDiv = document.querySelector('#dataBoxesDiv');
+
+    let dataBox = document.createElement('div');
+    dataBox.id = boxId;
+    dataBox.classList.add('dataBox');
+    dataBox.innerHTML = boxContentHTML;
+
+    dataBoxesDiv.append(dataBox);
+
+    $("#" + boxId).hide();
+    $("#" + boxId).fadeIn(boxFadeTime);
+}
+
 
 // Converts temperature from K to C
 function convertTemperature(kelvins) {
@@ -208,6 +211,24 @@ function getWeatherData() {
         temp = convertTemperature(data.main.feels_like);
         document.querySelector('#feelsLikeBox').innerHTML = 
         "Feels Like <br />" + temp + " &#176;C";
+        
+    });
+}
+
+/* Get data for Helium hotspot(s) */
+function getHeliumAPIData() {
+
+    let query = heliumAPI.hotspotsByName + 'fancy-malachite-finch'
+
+    p(query);
+
+    // fetch(query)
+    //     .then(res => res.json()).then(function(data) {p(data)});
+
+    fetch(query)
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
         
     });
 }
