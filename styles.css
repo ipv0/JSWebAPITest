@@ -145,7 +145,7 @@ ul {
     border: 1px solid #304a4b1b;
 
     text-align: center;
-    font-size: 18px;
+    font-size: 17px;
     padding-top: 10px;
     line-height: 30px;;
  }
@@ -161,3 +161,7 @@ ul {
      text-align: center;
      
  }
+
+ p.small-text {
+    font-size: 0.7em;
+}

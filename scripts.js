@@ -81,9 +81,8 @@ function link2Click() {
     // assign event listener to the load weather button that appears on the weather page
     if (loadWeatherButton)
         loadWeatherButton.addEventListener("click", testButtonClick);
-
-
 }
+
 
 /* ------------------------------------------- */
 function apiButtonclick() {
@@ -92,7 +91,8 @@ function apiButtonclick() {
 
     getHeliumAPIData();
 
-    createBox("API", "<p>Sample box content text.</p>");
+    let sampleText = '';
+    createBox("Helium API", sampleText);
 
     createDataBoxesDiv(function() {
         createDataBox('apiBox1', 1200, 'Test1 <br /> data');
@@ -228,6 +228,9 @@ function getHeliumAPIData() {
     .then(response => response.json())
     .then(data => {
         console.log(data);
+        p(data.data[0].name);
+        document.querySelector('#apiBox1').innerHTML = 
+        "Hotspot: <br /> <p class=\'small-text\'>" + data.data[0].name + "</p>";
         
     });
 }
