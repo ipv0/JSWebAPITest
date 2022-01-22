@@ -2,14 +2,22 @@
 
 /* Object with URI's for accessing various parts of the Helium network API */
 const heliumAPI = {
+
     hotspotsByName: "https://api.helium.io/v1/hotspots/name/",
-    hotspotsNameSearch: "https://api.helium.io/v1/hotspots/name?search="
+    hotspotsNameSearch: "https://api.helium.io/v1/hotspots/name?search=",
+    
+    rewardsForHotspot: (addr, time) => {
+        return "https://api.helium.io/v1/hotspots/" + addr + "/rewards/sum?min_time=" + time;
+    }
+
 }
+
 
 /* Helium Hotspots and their addresses */
 const heliumHotspots = {
     "fancy-malachite-finch" : "112eWDcZZGYGyzuTYBnfD727KnFknDhkNZAr3rU8sQHG2oqpVfps"
 }
+
 
 let p = (text) => { 
     console.log(text);
@@ -54,6 +62,7 @@ let assignEventListeners = function () {
 
 function testButtonClick () {
     p('testButton Click');
+   
     getWeatherData();
     //$("#dialog").dialog();
 }
@@ -61,7 +70,7 @@ function testButtonClick () {
 /* Weather Button / Menu Link */ 
 function link2Click() {
     getWeatherData();
-
+    p(heliumAPI.rewardsForHotspot("test","-1 week"));
     let sampleText = `
     <br />
     <button id = 'loadWeatherButton' class = 'button'>
@@ -222,14 +231,15 @@ function getWeatherData() {
 /* Get data for Helium hotspot(s) */
 function getHeliumAPIData() {
 
-    let query = heliumAPI.hotspotsByName + 'fancy-malachite-finch'
+    let query_name = heliumAPI.hotspotsByName + 'fancy-malachite-finch'
+    let query_rewards = heliumAPI.rewardsForHotspot(heliumHotspots["fancy-malachite-finch"], "-1%20week")
 
-    p(query);
+    p(query_rewards);
 
     // fetch(query)
     //     .then(res => res.json()).then(function(data) {p(data)});
 
-    fetch(query)
+    fetch(query_name)
     .then(response => response.json())
     .then(data => {
         console.log(data);
@@ -238,5 +248,16 @@ function getHeliumAPIData() {
         "Hotspot: <br /> <p class=\'small-text\'>" + data.data[0].name + "</p>";
         
     });
+
+    fetch(query_rewards)
+    .then(response => response.json())
+    .then(data => {
+        p(data);
+        document.querySelector('#apiBox2').innerHTML = 
+        "Rewards: <br /> <p class=\'small-text\'>" + data.data.total + "</p>";
+        
+    });
+
+
 }
 
