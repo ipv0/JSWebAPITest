@@ -196,7 +196,7 @@ function createDataBox(boxId, boxFadeTime, boxContentHTML) {
 
 // Converts temperature from K to C
 function convertTemperature(kelvins) {
-    return (kelvins - 273).toFixed(2);
+    return (kelvins - 273).toFixed(1); // round to one decimal space
 }
 
 function getWeatherData() {
@@ -253,7 +253,7 @@ function getHeliumAPIData() {
     .then(data => {
         p(data);
         document.querySelector('#apiBox2').innerHTML = 
-        "Rewards Per Week: <br /> <p class=\'small-text\'>" + data.data.total + "</p>";
+        "Rewards Per Week: <br /> <p class=\'small-text\'>" + Number(data.data.total).toFixed(2) + " HNT </p>";
         
     });
 
