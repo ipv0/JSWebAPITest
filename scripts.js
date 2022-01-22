@@ -83,13 +83,12 @@ function link2Click() {
     // creates the container for data boxes, then adds individual boxes 
     // createDataBox(Box CSS Id, box FadeIn Time, Box Content)
     createDataBoxesDiv(function() {
-        createDataBox('temperatureBox', 400, 'Temp.');
-        createDataBox('feelsLikeBox', 600, 'Feels File');
-        createDataBox('tempMinBox', 800, 'Temp. Min.');
-        createDataBox('humidityBox', 1000, 'Humidity');
-        createDataBox('humidityBox2', 1200, 'Test1 <br /> data');
-        createDataBox('humidityBox3', 1400, 'Test2 <br /> data');
-        createDataBox('humidityBox4', 1600, 'Test3 <br /> data');
+        createDataBox('temperatureBox', 500, 'Temp.');
+        createDataBox('feelsLikeBox', 800, 'Feels File');
+        createDataBox('tempMinBox', 1100, 'Temp. Min.');
+        createDataBox('humidityBox', 1400, 'Humidity');
+        createDataBox('humidityBox2', 1700, 'Test1 <br /> data');
+        createDataBox('humidityBox3', 2000, 'Test2 <br /> data');
     });
 
     // assign event listener to the load weather button that appears on the weather page
@@ -254,7 +253,7 @@ function getHeliumAPIData() {
     .then(data => {
         p(data);
         document.querySelector('#apiBox2').innerHTML = 
-        "Rewards: <br /> <p class=\'small-text\'>" + data.data.total + "</p>";
+        "Rewards Per Week: <br /> <p class=\'small-text\'>" + data.data.total + "</p>";
         
     });
 
