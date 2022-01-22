@@ -6,6 +6,11 @@ const heliumAPI = {
     hotspotsNameSearch: "https://api.helium.io/v1/hotspots/name?search="
 }
 
+/* Helium Hotspots and their addresses */
+const heliumHotspots = {
+    "fancy-malachite-finch" : "112eWDcZZGYGyzuTYBnfD727KnFknDhkNZAr3rU8sQHG2oqpVfps"
+}
+
 let p = (text) => { 
     console.log(text);
 }
