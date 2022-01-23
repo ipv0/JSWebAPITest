@@ -43,7 +43,6 @@ let assignEventListeners = function () {
     const link2Button = document.querySelector('#link-2');
     const apiButton   = document.querySelector('#link-3');
     const link4Button = document.querySelector('#link-4');
-    const link5Button = document.querySelector('#link-5');
     const loadWeatherButton = document.querySelector('#loadWeatherButton');
 
     apiButton.addEventListener('click', function () {
@@ -56,9 +55,7 @@ let assignEventListeners = function () {
 
     link4Button.addEventListener('click', link4Click);
 
-    link5Button.addEventListener('click', link5Click);
-
-}
+    }
 
 function testButtonClick () {
     p('testButton Click');
@@ -98,6 +95,7 @@ function link2Click() {
 
 
 /* ------------------------------------------- */
+/* TODO: GO THROUGH THE LIST OF HOTSPOTS SAVED IN THE OBJECT, AND CREATE BOXES FOR EACH ONE */
 function apiButtonclick() {
     p('API Button clicked');
     /* write the rest here... */
@@ -121,14 +119,10 @@ function apiButtonclick() {
 function link4Click() {
     p('link4 click');
 
-    createBox("Other", "Sample Other Text.");
+    createBox("Setup", "Configure which hotspots to keep track of.");
 
     createDataBox('asd', 600, 'Feels File');
     
-}
-
-function link5Click() {
-    createBox("Google", "<a href='#'> Google </a>");
 }
 
 let createBox = function(boxTitle, BoxContentHTML) {
@@ -231,9 +225,11 @@ function getWeatherData() {
 function getHeliumAPIData() {
 
     let query_name = heliumAPI.hotspotsByName + 'fancy-malachite-finch'
-    let query_rewards = heliumAPI.rewardsForHotspot(heliumHotspots["fancy-malachite-finch"], "-1%20week")
+    let query_rewards_week = heliumAPI.rewardsForHotspot(heliumHotspots["fancy-malachite-finch"], "-1%20week")
+    let query_rewards_month = heliumAPI.rewardsForHotspot(heliumHotspots["fancy-malachite-finch"], "-4%20week")
+    let query_rewards_day = heliumAPI.rewardsForHotspot(heliumHotspots["fancy-malachite-finch"], "-1%20day")
 
-    p(query_rewards);
+    p(query_rewards_week);
 
     // fetch(query)
     //     .then(res => res.json()).then(function(data) {p(data)});
@@ -244,18 +240,46 @@ function getHeliumAPIData() {
         console.log(data);
         p(data.data[0].name);
         document.querySelector('#apiBox1').innerHTML = 
-        "Hotspot: <br /> <p class=\'small-text\'>" + data.data[0].name + "</p>";
+        "<h5 class=\'data-box-header\'>Hotspot: </h5>" + 
+        "<p class=\'small-text\'>" + data.data[0].name + "</p>";
+        //"<h5 class=\'data-box-header\'>Address: </h5>" + 
+        //"<p class=\'tiny-text\'>" + data.data[0].address + "</p>" ;
         
     });
 
-    fetch(query_rewards)
+    fetch(query_rewards_day)
     .then(response => response.json())
     .then(data => {
         p(data);
-        document.querySelector('#apiBox2').innerHTML = 
-        "Rewards Per Week: <br /> <p class=\'small-text\'>" + Number(data.data.total).toFixed(2) + " HNT </p>";
+        document.querySelector('#apiBox1').innerHTML += 
+        "<h6 class=\'data-box-header\'>Rewards Per Day: </h6>" + 
+        "<p class=\'small-text\'>" + Number(data.data.total).toFixed(3) + 
+        " HNT </p>";
         
     });
+
+    fetch(query_rewards_week)
+    .then(response => response.json())
+    .then(data => {
+        p(data);
+        document.querySelector('#apiBox1').innerHTML += 
+        "<h6 class=\'data-box-header\'>Rewards Per Week: </h6>" + 
+        "<p class=\'small-text\'>" + Number(data.data.total).toFixed(3) + 
+        " HNT </p>";
+        
+    });
+
+    fetch(query_rewards_month)
+    .then(response => response.json())
+    .then(data => {
+        p(data);
+        document.querySelector('#apiBox1').innerHTML += 
+        "<h6 class=\'data-box-header\'>Rewards Per Month: </h6>" + 
+        "<p class=\'small-text\'>" + Number(data.data.total).toFixed(3) + 
+        " HNT </p>";
+        
+    });
+
 
 
 }

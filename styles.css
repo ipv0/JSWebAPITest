@@ -162,6 +162,16 @@ ul {
      
  }
 
- p.small-text {
+p.small-text {
     font-size: 0.7em;
+}
+
+p.tiny-text {
+    font-size: 0.4em;
+}
+
+.data-box-header {
+    margin-top: 0;
+    margin-bottom: -10px;
+    /* font-size: 0.8em; */
 }
