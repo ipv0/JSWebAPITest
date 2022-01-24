@@ -256,7 +256,7 @@ function getHeliumAPIData() {
         "<p class=\'small-text\'>" + Number(data.data.total).toFixed(3) + 
         " HNT </p>";
         
-    });
+    }).then(
 
     fetch(query_rewards_week)
     .then(response => response.json())
@@ -267,7 +267,7 @@ function getHeliumAPIData() {
         "<p class=\'small-text\'>" + Number(data.data.total).toFixed(3) + 
         " HNT </p>";
         
-    });
+    })).then(
 
     fetch(query_rewards_month)
     .then(response => response.json())
@@ -278,7 +278,7 @@ function getHeliumAPIData() {
         "<p class=\'small-text\'>" + Number(data.data.total).toFixed(3) + 
         " HNT </p>";
         
-    });
+    }));
 
 
 
