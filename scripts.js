@@ -14,9 +14,13 @@ const heliumAPI = {
 
 
 /* Helium Hotspots and their addresses */
-const heliumHotspots = {
-    "fancy-malachite-finch" : "112eWDcZZGYGyzuTYBnfD727KnFknDhkNZAr3rU8sQHG2oqpVfps"
-}
+
+const heliumHotspots = [
+    {
+        name: "fancy-malachite-finch",
+        addr: "112eWDcZZGYGyzuTYBnfD727KnFknDhkNZAr3rU8sQHG2oqpVfps"
+    }
+]
 
 
 let p = (text) => { 
@@ -44,6 +48,7 @@ let assignEventListeners = function () {
     const apiButton   = document.querySelector('#link-3');
     const link4Button = document.querySelector('#link-4');
     const loadWeatherButton = document.querySelector('#loadWeatherButton');
+    
 
     apiButton.addEventListener('click', function () {
         apiButtonclick();
@@ -64,10 +69,15 @@ function testButtonClick () {
     //$("#dialog").dialog();
 }
 
+function reloadHeliumAPIButtonClick() {
+    getHeliumAPIData();
+    p('reload helium api button clicked');
+}
+
 /* Weather Button / Menu Link */ 
 function link2Click() {
     getWeatherData();
-    p(heliumAPI.rewardsForHotspot("test","-1 week"));
+ 
     let sampleText = `
     <br />
     <button id = 'loadWeatherButton' class = 'button'>
@@ -102,7 +112,13 @@ function apiButtonclick() {
 
     getHeliumAPIData();
 
-    let sampleText = '';
+    let sampleText = `
+    <br />
+    <button id = 'reloadHeliumAPIButton' class = 'button'>
+    Reload Helium API Data
+    </button>
+    <p id = "stuffText">  </p>
+    `;
     createBox("Helium API", sampleText);
 
     createDataBoxesDiv(function() {
@@ -112,6 +128,10 @@ function apiButtonclick() {
         createDataBox('apiBox4', 1800, 'Test3 <br /> data');
         createDataBox('apiBox5', 2000, 'Test3 <br /> data');
     });
+
+    /* Assign the click event listener to the helium reload button */
+    let reloadHeliumAPIbutton = document.querySelector('#reloadHeliumAPIButton');
+    reloadHeliumAPIButton.addEventListener('click', reloadHeliumAPIButtonClick);
 
 }
 /* -------------------------------------------- */
@@ -224,15 +244,12 @@ function getWeatherData() {
 /* Get data for Helium hotspot(s) */
 function getHeliumAPIData() {
 
-    let query_name = heliumAPI.hotspotsByName + 'fancy-malachite-finch'
-    let query_rewards_week = heliumAPI.rewardsForHotspot(heliumHotspots["fancy-malachite-finch"], "-1%20week")
-    let query_rewards_month = heliumAPI.rewardsForHotspot(heliumHotspots["fancy-malachite-finch"], "-4%20week")
-    let query_rewards_day = heliumAPI.rewardsForHotspot(heliumHotspots["fancy-malachite-finch"], "-1%20day")
+    let query_name = heliumAPI.hotspotsByName + heliumHotspots[0].name;
+    let query_rewards_week = heliumAPI.rewardsForHotspot(heliumHotspots[0].addr, "-1%20week")
+    let query_rewards_month = heliumAPI.rewardsForHotspot(heliumHotspots[0].addr, "-4%20week")
+    let query_rewards_day = heliumAPI.rewardsForHotspot(heliumHotspots[0].addr, "-1%20day")
 
     p(query_rewards_week);
-
-    // fetch(query)
-    //     .then(res => res.json()).then(function(data) {p(data)});
 
     fetch(query_name)
     .then(response => response.json())
@@ -241,10 +258,7 @@ function getHeliumAPIData() {
         p(data.data[0].name);
         document.querySelector('#apiBox1').innerHTML = 
         "<h5 class=\'data-box-header\'>Hotspot: </h5>" + 
-        "<p class=\'small-text\'>" + data.data[0].name + "</p>";
-        //"<h5 class=\'data-box-header\'>Address: </h5>" + 
-        //"<p class=\'tiny-text\'>" + data.data[0].address + "</p>" ;
-        
+        "<p class=\'small-text\'>" + data.data[0].name + "</p>";     
     });
 
     fetch(query_rewards_day)

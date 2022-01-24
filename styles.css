@@ -63,7 +63,7 @@ ul {
 
 .box-class {
     width: 50em;
-    height: 400px;
+    height: auto;
     background-color: rgb(209, 237, 237, 0.28);
     margin: 5px auto;
     border-radius: 4px;
@@ -132,7 +132,7 @@ ul {
 
 /* Data box class for displaying
  * short pieces of info */
- .dataBox {
+.dataBox {
     display: inline-table;
     width: 25%;
     min-height: 4em;
@@ -155,7 +155,12 @@ ul {
      margin: -10px auto 20px auto;
  }
 
- #dataBoxesDiv {
+ #reloadHeliumAPIButton {
+    display: block;
+    margin: -10px auto 20px auto;
+}
+
+#dataBoxesDiv {
      /* border: 1px solid black; */
      margin: 0 auto !important;
      text-align: center;
