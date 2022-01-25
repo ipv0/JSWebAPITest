@@ -19,6 +19,10 @@ const heliumHotspots = [
     {
         name: "fancy-malachite-finch",
         addr: "112eWDcZZGYGyzuTYBnfD727KnFknDhkNZAr3rU8sQHG2oqpVfps"
+    },
+    {
+        name: "Test-box-two",
+        addr: "asdfrandomaddr"
     }
 ]
 
@@ -141,7 +145,24 @@ function link4Click() {
 
     createBox("Setup", "Configure which hotspots to keep track of.");
 
-    createDataBox('asd', 600, 'Feels File');
+
+    /* --- Code below is for testing purposes to learn localstorage --- */
+
+    // put the hotspots array of objects ibto local storage
+    window.localStorage.setItem('hotspots',JSON.stringify(heliumHotspots));
+
+    // take that array from local storage
+    let fromLocalStorage = JSON.parse(window.localStorage.getItem('hotspots'));
+
+    // iterate theu that array of objects creating databoxes for each one
+    createDataBoxesDiv(function() {
+        for (let item of fromLocalStorage) {
+            p(item);
+            createDataBox('setupBox1', 50, item.name);
+        }
+     });
+
+    //createDataBox('asd', 600, 'Feels File');
     
 }
 
@@ -293,8 +314,6 @@ function getHeliumAPIData() {
         " HNT </p>";
         
     }));
-
-
 
 }
 
