@@ -263,7 +263,7 @@ function getWeatherData() {
 }
 
 /* Get data for Helium hotspot(s) */
-function getHeliumAPIData() {
+async function getHeliumAPIData() {
 
     let query_name = heliumAPI.hotspotsByName + heliumHotspots[0].name;
     let query_rewards_week = heliumAPI.rewardsForHotspot(heliumHotspots[0].addr, "-1%20week")
@@ -272,7 +272,7 @@ function getHeliumAPIData() {
 
     p(query_rewards_week);
 
-    fetch(query_name)
+    await fetch(query_name)
     .then(response => response.json())
     .then(data => {
         console.log(data);
@@ -282,7 +282,7 @@ function getHeliumAPIData() {
         "<p class=\'small-text\'>" + data.data[0].name + "</p>";     
     });
 
-    fetch(query_rewards_day)
+    await fetch(query_rewards_day)
     .then(response => response.json())
     .then(data => {
         p(data);
@@ -293,7 +293,7 @@ function getHeliumAPIData() {
         
     }).then(
 
-    fetch(query_rewards_week)
+    await fetch(query_rewards_week)
     .then(response => response.json())
     .then(data => {
         p(data);
@@ -304,7 +304,7 @@ function getHeliumAPIData() {
         
     })).then(
 
-    fetch(query_rewards_month)
+    await fetch(query_rewards_month)
     .then(response => response.json())
     .then(data => {
         p(data);
