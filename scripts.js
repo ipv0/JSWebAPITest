@@ -114,7 +114,8 @@ function apiButtonclick() {
     p('API Button clicked');
     /* write the rest here... */
 
-    getHeliumAPIData();
+    // load the list of hotspots (array of objects) from localStorage
+    let fromLocalStorage = JSON.parse(window.localStorage.getItem('hotspots'));
 
     let sampleText = `
     <br />
@@ -125,17 +126,24 @@ function apiButtonclick() {
     `;
     createBox("Helium API", sampleText);
 
+    // create a div that contains individual data boxes
     createDataBoxesDiv(function() {
-        createDataBox('apiBox1', 1200, 'Test1 <br /> data');
-        createDataBox('apiBox2', 1400, 'Test2 <br /> data');
-        createDataBox('apiBox3', 1600, 'Test3 <br /> data');
-        createDataBox('apiBox4', 1800, 'Test3 <br /> data');
-        createDataBox('apiBox5', 2000, 'Test3 <br /> data');
+
+        // create databoxes for each ently in the list of hotspots, give them
+        // ID's accordingly, number them from 1 to n
+        let counter = 1;
+        for (let hotspot of fromLocalStorage) {
+            createDataBox('apiBox'+counter, 200, hotspot.name);
+            counter++;
+        }
+
     });
 
     /* Assign the click event listener to the helium reload button */
     let reloadHeliumAPIbutton = document.querySelector('#reloadHeliumAPIButton');
     reloadHeliumAPIButton.addEventListener('click', reloadHeliumAPIButtonClick);
+
+    getHeliumAPIData();
 
 }
 /* -------------------------------------------- */
