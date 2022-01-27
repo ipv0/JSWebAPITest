@@ -22,14 +22,13 @@ const heliumHotspots = [
     },
     {
         name: "Test-box-two",
-        addr: "asdfrandomaddr"
+        addr: "randomaddrdasdasd"
     }
 ]
 
 
-let p = (text) => { 
-    console.log(text);
-}
+const p = (text) => console.log(text);
+
 
 /* --- JQuery animations and stuff --- */
 $(document).ready(function() {
@@ -48,21 +47,22 @@ $(document).ready(function() {
 let assignEventListeners = function () {
     p('assignEventListeners func called');
 
-    const link2Button = document.querySelector('#link-2');
-    const apiButton   = document.querySelector('#link-3');
-    const link4Button = document.querySelector('#link-4');
+    const weatherLink = document.querySelector('#link-2');
+    const apiLink     = document.querySelector('#link-3');
+    const setupLink   = document.querySelector('#link-4');
+    
     const loadWeatherButton = document.querySelector('#loadWeatherButton');
     
 
-    apiButton.addEventListener('click', function () {
-        apiButtonclick();
+    apiLink.addEventListener('click', function () {
+        apiLinkClick();
     });
 
     // when assigning event listener callbacks like that, remember
     // not to put brackets after the  funcktion name, like below
-    link2Button.addEventListener('click', link2Click);
+    weatherLink.addEventListener('click', weatherLinkClick);
 
-    link4Button.addEventListener('click', link4Click);
+    setupLink.addEventListener('click', setupLinkClick);
 
     }
 
@@ -79,8 +79,8 @@ function reloadHeliumAPIButtonClick() {
 }
 
 /* Weather Button / Menu Link */ 
-function link2Click() {
-    getWeatherData();
+function weatherLinkClick() {
+   
  
     let sampleText = `
     <br />
@@ -105,12 +105,13 @@ function link2Click() {
     // assign event listener to the load weather button that appears on the weather page
     if (loadWeatherButton)
         loadWeatherButton.addEventListener("click", testButtonClick);
+
+    getWeatherData();
 }
 
 
 /* ------------------------------------------- */
-/* TODO: GO THROUGH THE LIST OF HOTSPOTS SAVED IN THE OBJECT, AND CREATE BOXES FOR EACH ONE */
-function apiButtonclick() {
+function apiLinkClick() {
     p('API Button clicked');
     /* write the rest here... */
 
@@ -148,7 +149,7 @@ function apiButtonclick() {
 }
 /* -------------------------------------------- */
 
-function link4Click() {
+function setupLinkClick() {
     p('link4 click');
 
     createBox("Setup", "Configure which hotspots to keep track of.");
@@ -162,12 +163,26 @@ function link4Click() {
     // take that array from local storage
     let fromLocalStorage = JSON.parse(window.localStorage.getItem('hotspots'));
 
-    // iterate theu that array of objects creating databoxes for each one
+    // iterate thru that array of objects creating databoxes for each one
     createDataBoxesDiv(function() {
+        let counter = 1;
+
         for (let item of fromLocalStorage) {
-            p(item);
-            createDataBox('setupBox1', 50, item.name);
+
+            let formHTML = `
+            <label for=\'hotspotName${counter}\' class=\'input-label\'>
+            Hotspot # ${counter}
+            </label>
+            <input type=\'text\' name=\'hotspotName${counter}\' class=\'input-field\' 
+            id=\'hotspotName${counter}\' 
+            value=\'${item.name}\'>
+            `;
+
+            createDataBox('setupBox'+counter, 100, formHTML);
+
+            counter++;
         }
+
      });
 
     //createDataBox('asd', 600, 'Feels File');

@@ -180,3 +180,21 @@ p.tiny-text {
     margin-bottom: -10px;
     /* font-size: 0.8em; */
 }
+
+/* .input-label {
+    text-align: left;
+} */
+
+.dataBox label {
+    display: block;
+    text-align: left;
+    margin-left: 0.45em;
+    font-size: 0.9em;
+    font-weight: bold;
+    margin-bottom: -0.2em;
+}
+
+.input-field{
+    padding: 3px;
+    margin: auto 0.52em;
+}
