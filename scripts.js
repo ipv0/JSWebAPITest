@@ -189,9 +189,18 @@ function setupLinkClick() {
             counter++;
         }
 
-     });
+    }); 
 
-     updateInputFields();
+    /* Create a button to update the heliumHotspots array of objects. Assign function to it. */
+    let updateButton = document.createElement("button");
+    updateButton.className = "button";
+    updateButton.innerHTML = "Update Settings";
+    updateButton.addEventListener("click", updateInputFields)
+    
+    let boxContent = document.querySelector("#boxContent");     
+    boxContent.appendChild(updateButton);
+
+     
 
 }
 

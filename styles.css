@@ -102,10 +102,10 @@ ul {
 }
 
 .button {
-    display:inline-block;
+    display:block;
     padding:0.5em 1.2em;
     border:0.1em solid #000000;
-    margin:0 0.2em 0.2em 0;
+    margin: 10px auto;
     border-radius:0.8em;
     box-sizing: border-box;
     text-decoration:none;
