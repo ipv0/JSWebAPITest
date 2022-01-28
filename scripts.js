@@ -15,7 +15,7 @@ const heliumAPI = {
 
 /* Helium Hotspots and their addresses */
 
-const heliumHotspots = [
+let heliumHotspots = [
     {
         name: "fancy-malachite-finch",
         addr: "112eWDcZZGYGyzuTYBnfD727KnFknDhkNZAr3rU8sQHG2oqpVfps"
@@ -173,9 +173,15 @@ function setupLinkClick() {
             <label for=\'hotspotName${counter}\' class=\'input-label\'>
             Hotspot # ${counter}
             </label>
-            <input type=\'text\' name=\'hotspotName${counter}\' class=\'input-field\' 
+            <input type=\'text\' name=\'hotspotName${counter}\' class=\'input-field-name\' 
             id=\'hotspotName${counter}\' 
             value=\'${item.name}\'>
+            <label for=\'hotspotAddr${counter}\' class=\'input-label\'>
+            Address :
+            </label>
+            <input type=\'text\' name=\'hotspotAddr${counter}\' class=\'input-field-addr\' 
+            id=\'hotspotName${counter}\' 
+            value=\'${item.addr}\'>
             `;
 
             createDataBox('setupBox'+counter, 100, formHTML);
@@ -185,8 +191,8 @@ function setupLinkClick() {
 
      });
 
-    //createDataBox('asd', 600, 'Feels File');
-    
+     updateInputFields();
+
 }
 
 let createBox = function(boxTitle, BoxContentHTML) {
@@ -340,3 +346,25 @@ async function getHeliumAPIData() {
 
 }
 
+/* Read input fields from the Setup page, update heliumHotspots array accordingly */
+
+function updateInputFields() {
+    let fields = document.getElementsByClassName("input-field-name");
+    let addrFields = document.getElementsByClassName("input-field-addr");
+    p(fields);
+
+    heliumHotspots = [];
+
+    let counter = 0;
+    for (let field of fields) {
+        heliumHotspots.push({
+            name: field.value,
+            addr: addrFields[counter].value
+        });
+        counter++;
+    }
+
+    p(heliumHotspots)
+
+
+}

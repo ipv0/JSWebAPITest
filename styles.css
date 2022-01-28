@@ -194,7 +194,14 @@ p.tiny-text {
     margin-bottom: -0.2em;
 }
 
-.input-field{
+.input-field-name{
     padding: 3px;
     margin: auto 0.52em;
+}
+
+
+.input-field-addr{
+    padding: 3px;
+    margin: auto 0.52em;
+    margin-bottom: 10px;
 }
