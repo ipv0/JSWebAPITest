@@ -201,7 +201,6 @@ function setupLinkClick() {
     boxContent.appendChild(updateButton);
 
      
-
 }
 
 let createBox = function(boxTitle, BoxContentHTML) {
@@ -301,6 +300,7 @@ function getWeatherData() {
 }
 
 /* Get data for Helium hotspot(s) */
+/* TODO !!! Iterate thru helium hotspots requesting data for each one !!!*/
 async function getHeliumAPIData() {
 
     let query_name = heliumAPI.hotspotsByName + heliumHotspots[0].name;
