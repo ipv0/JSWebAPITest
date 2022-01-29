@@ -23,6 +23,10 @@ let heliumHotspots = [
     {
         name: "Test-box-two",
         addr: "randomaddrdasdasd"
+    },
+    {
+        name: "Test-Box-Three",
+        addr: "randomaddr2"
     }
 ]
 
@@ -153,12 +157,6 @@ function setupLinkClick() {
     p('link4 click');
 
     createBox("Setup", "Configure which hotspots to keep track of.");
-
-
-    /* --- Code below is for testing purposes to learn localstorage --- */
-
-    // put the hotspots array of objects ibto local storage
-    window.localStorage.setItem('hotspots',JSON.stringify(heliumHotspots));
 
     // take that array from local storage
     let fromLocalStorage = JSON.parse(window.localStorage.getItem('hotspots'));
@@ -375,5 +373,7 @@ function updateInputFields() {
 
     p(heliumHotspots)
 
+    // put the hotspots array of objects ibto local storage
+    window.localStorage.setItem('hotspots', JSON.stringify(heliumHotspots));
 
 }
