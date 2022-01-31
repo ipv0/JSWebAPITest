@@ -301,55 +301,68 @@ function getWeatherData() {
 /* TODO !!! Iterate thru helium hotspots requesting data for each one !!!*/
 async function getHeliumAPIData() {
 
-    let query_name = heliumAPI.hotspotsByName + heliumHotspots[0].name;
-    let query_rewards_week = heliumAPI.rewardsForHotspot(heliumHotspots[0].addr, "-1%20week")
-    let query_rewards_month = heliumAPI.rewardsForHotspot(heliumHotspots[0].addr, "-4%20week")
-    let query_rewards_day = heliumAPI.rewardsForHotspot(heliumHotspots[0].addr, "-1%20day")
+    let fromLocalStorage = JSON.parse(window.localStorage.getItem('hotspots'));
+    heliumHotspots = fromLocalStorage;
 
-    p(query_rewards_week);
+    p("heliumHotspots array: " + heliumHotspots);
 
-    await fetch(query_name)
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
-        p(data.data[0].name);
-        document.querySelector('#apiBox1').innerHTML = 
-        "<h5 class=\'data-box-header\'>Hotspot: </h5>" + 
-        "<p class=\'small-text\'>" + data.data[0].name + "</p>";     
-    });
+    let counter = 1;
+    for (item of heliumHotspots) {
 
-    await fetch(query_rewards_day)
-    .then(response => response.json())
-    .then(data => {
-        p(data);
-        document.querySelector('#apiBox1').innerHTML += 
-        "<h6 class=\'data-box-header\'>Rewards Per Day: </h6>" + 
-        "<p class=\'small-text\'>" + Number(data.data.total).toFixed(3) + 
-        " HNT </p>";
-        
-    }).then(
+       // p(item)
 
-    await fetch(query_rewards_week)
-    .then(response => response.json())
-    .then(data => {
-        p(data);
-        document.querySelector('#apiBox1').innerHTML += 
-        "<h6 class=\'data-box-header\'>Rewards Per Week: </h6>" + 
-        "<p class=\'small-text\'>" + Number(data.data.total).toFixed(3) + 
-        " HNT </p>";
-        
-    })).then(
+        let query_name = heliumAPI.hotspotsByName + item.name;
+        let query_rewards_week = heliumAPI.rewardsForHotspot(item.addr, "-1%20week")
+        let query_rewards_month = heliumAPI.rewardsForHotspot(item.addr, "-4%20week")
+        let query_rewards_day = heliumAPI.rewardsForHotspot(item.addr, "-1%20day")
 
-    await fetch(query_rewards_month)
-    .then(response => response.json())
-    .then(data => {
-        p(data);
-        document.querySelector('#apiBox1').innerHTML += 
-        "<h6 class=\'data-box-header\'>Rewards Per Month: </h6>" + 
-        "<p class=\'small-text\'>" + Number(data.data.total).toFixed(3) + 
-        " HNT </p>";
-        
-    }));
+        p(query_rewards_week);
+
+        await fetch(query_name)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            p(data.data[0].name);
+            document.querySelector('#apiBox'+counter).innerHTML = 
+            "<h5 class=\'data-box-header\'>Hotspot: </h5>" + 
+            "<p class=\'small-text\'>" + data.data[0].name + "</p>";     
+        });
+
+        await fetch(query_rewards_day)
+        .then(response => response.json())
+        .then(data => {
+            p(data);
+            document.querySelector('#apiBox'+counter).innerHTML += 
+            "<h6 class=\'data-box-header\'>Rewards Per Day: </h6>" + 
+            "<p class=\'small-text\'>" + Number(data.data.total).toFixed(3) + 
+            " HNT </p>";
+            
+        }).then(
+
+        await fetch(query_rewards_week)
+        .then(response => response.json())
+        .then(data => {
+            p(data);
+            document.querySelector('#apiBox'+counter).innerHTML += 
+            "<h6 class=\'data-box-header\'>Rewards Per Week: </h6>" + 
+            "<p class=\'small-text\'>" + Number(data.data.total).toFixed(3) + 
+            " HNT </p>";
+            
+        })).then(
+
+        await fetch(query_rewards_month)
+        .then(response => response.json())
+        .then(data => {
+            p(data);
+            document.querySelector('#apiBox'+counter).innerHTML += 
+            "<h6 class=\'data-box-header\'>Rewards Per Month: </h6>" + 
+            "<p class=\'small-text\'>" + Number(data.data.total).toFixed(3) + 
+            " HNT </p>";
+            
+        }));
+
+        counter++;
+    }
 
 }
 
@@ -373,7 +386,7 @@ function updateInputFields() {
 
     p(heliumHotspots)
 
-    // put the hotspots array of objects ibto local storage
+    // put the hotspots array of objects into local storage
     window.localStorage.setItem('hotspots', JSON.stringify(heliumHotspots));
 
 }
