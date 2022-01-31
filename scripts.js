@@ -43,6 +43,11 @@ $(document).ready(function() {
         $(this).fadeOut(60).fadeIn(40);
     })
 
+    //if nothing is saved in localstorage, put default values in there
+    if( !window.localStorage.getItem('hotspots') ) {
+        window.localStorage.setItem('hotspots', JSON.stringify(heliumHotspots));
+    }
+
     assignEventListeners();
 
 });
