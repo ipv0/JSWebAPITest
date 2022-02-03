@@ -43,7 +43,7 @@ $(document).ready(function() {
         $(this).fadeOut(60).fadeIn(40);
     })
 
-    //if nothing is saved in localstorage, put default values in there
+    // If nothing is saved in localstorage, put default values in there
     if( !window.localStorage.getItem('hotspots') ) {
         window.localStorage.setItem('hotspots', JSON.stringify(heliumHotspots));
     }
@@ -80,6 +80,8 @@ function testButtonClick () {
    
     getWeatherData();
     //$("#dialog").dialog();
+
+    getAddrByName('fancy-malachite-finch');
 }
 
 function reloadHeliumAPIButtonClick() {
@@ -191,6 +193,12 @@ function setupLinkClick() {
 
             counter++;
         }
+
+        let addHotspotButtonHTML = `
+        <button class='button add-hotspot-button'>+ </button>
+        `;
+
+        createDataBox('addHotspotButton', 100, addHotspotButtonHTML);
 
     }); 
 
@@ -394,4 +402,22 @@ function updateInputFields() {
     // put the hotspots array of objects into local storage
     window.localStorage.setItem('hotspots', JSON.stringify(heliumHotspots));
 
+}
+
+
+// Get hotspot's blockchain address by its name
+async function getAddrByName (name) {
+    let addr;
+
+    query_name = heliumAPI.hotspotsByName + name;
+
+    await fetch(query_name)
+    .then(response => response.json())
+    .then(result => {
+        console.log(result);
+        addr = result.data[0].address
+        p(addr);   
+    });
+
+    return addr;
 }

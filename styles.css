@@ -104,7 +104,7 @@ ul {
 .button {
     display:block;
     padding:0.5em 1.2em;
-    border:0.1em solid #000000;
+    border:0.1em solid #0000006e;
     margin: 10px auto;
     border-radius:0.8em;
     box-sizing: border-box;
@@ -117,7 +117,7 @@ ul {
     text-align:center;
     transition: all 0.15s;
     border-radius: 2px;
-    box-shadow: 1px 1px 5px rgba(36, 86, 119, 0.693);
+    box-shadow: 1px 1px 5px rgba(36, 86, 119, 0.234);
 }
 
 .button:hover {
@@ -129,6 +129,25 @@ ul {
     background-color:#4095c683;
 }
 
+/* *********************************** Add Hotspot Button *************************** */
+/* just the button itself */
+.add-hotspot-button {
+    background-color:#80caed17;
+    border-color: #0000002f;
+    font-size: 1.1em;
+    margin-top: 4%;
+    color: #0b6b4646;
+    box-shadow: 1px 1px 5px rgba(36, 86, 119, 0.118);
+    text-shadow: 0 0.09em 0.09em rgba(0, 0, 0, 0.063);
+
+}
+
+/* the actual databox that contains the add hotspot button */
+#addHotspotButton {
+    
+}
+
+/* ********************************************************************************** */
 
 /* Data box class for displaying
  * short pieces of info */
