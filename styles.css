@@ -219,8 +219,27 @@ p.tiny-text {
 }
 
 
-.input-field-addr{
+.input-field-addr {
     padding: 3px;
     margin: auto 0.52em;
     margin-bottom: 10px;
+}
+
+/* *************** Load Address from Name Link ***************** */
+.input-field-get-addr-link {
+    display: block;
+    font-size: 0.7em;
+    text-align: left;
+    margin: -1.2em 0 0 0.6em;
+    color: rgb(19, 58, 184);;
+}
+
+.input-field-get-addr-link:visited {
+    color: rgb(19, 58, 184);;
+}
+
+
+#blockchainAddrLabel {
+    font-size: 0.75em;
+    margin-bottom: -0.6em;
 }

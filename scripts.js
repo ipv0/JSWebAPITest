@@ -181,12 +181,13 @@ function setupLinkClick() {
             <input type=\'text\' name=\'hotspotName${counter}\' class=\'input-field-name\' 
             id=\'hotspotName${counter}\' 
             value=\'${item.name}\'>
-            <label for=\'hotspotAddr${counter}\' class=\'input-label\'>
-            Address :
+            <label for=\'hotspotAddr${counter}\' class=\'input-label\' id = \'blockchainAddrLabel\'>
+            Blockchain Address:
             </label>
             <input type=\'text\' name=\'hotspotAddr${counter}\' class=\'input-field-addr\' 
-            id=\'hotspotName${counter}\' 
-            value=\'${item.addr}\'>
+            id=\'hotspotName${counter}\' value=\'${item.addr}\'>
+            <a href = '#' id = 'inputFieldGetAddrLink'${counter} class = 'input-field-get-addr-link'
+            title='Click here to retrieve the blockchain addres of the hotspot by name.'> Get address from name </a>
             `;
 
             createDataBox('setupBox'+counter, 100, formHTML);
@@ -199,6 +200,8 @@ function setupLinkClick() {
         `;
 
         createDataBox('addHotspotButton', 100, addHotspotButtonHTML);
+
+        document.querySelector('#inputFieldGetAddrLink').addEventListener('click', getAddrLinkClick);
 
     }); 
 
@@ -420,4 +423,9 @@ async function getAddrByName (name) {
     });
 
     return addr;
+}
+
+/* IMPLEMENT THIS ONE */
+function getAddrLinkClick() {
+
 }
