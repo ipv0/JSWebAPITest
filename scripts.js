@@ -186,11 +186,15 @@ function setupLinkClick() {
             </label>
             <input type=\'text\' name=\'hotspotAddr${counter}\' class=\'input-field-addr\' 
             id=\'hotspotName${counter}\' value=\'${item.addr}\'>
-            <a href = '#' id = 'inputFieldGetAddrLink'${counter} class = 'input-field-get-addr-link'
-            title='Click here to retrieve the blockchain addres of the hotspot by name.'> Get address from name </a>
+            <a href = \'#\' id='inputFieldGetAddrLink${counter}' class = \'input-field-get-addr-link\'
+            title=\'Click here to retrieve the blockchain addres of the hotspot by name.\'> Get address from name </a>
             `;
 
             createDataBox('setupBox'+counter, 100, formHTML);
+
+            document.querySelector(`#inputFieldGetAddrLink${counter}`)
+            .addEventListener('click', getAddrLinkClick);
+
 
             counter++;
         }
@@ -201,7 +205,6 @@ function setupLinkClick() {
 
         createDataBox('addHotspotButton', 100, addHotspotButtonHTML);
 
-        document.querySelector('#inputFieldGetAddrLink').addEventListener('click', getAddrLinkClick);
 
     }); 
 
@@ -409,7 +412,7 @@ function updateInputFields() {
 
 
 // Get hotspot's blockchain address by its name
-async function getAddrByName (name) {
+async function getAddrByName(name) {
     let addr;
 
     query_name = heliumAPI.hotspotsByName + name;
@@ -419,13 +422,25 @@ async function getAddrByName (name) {
     .then(result => {
         console.log(result);
         addr = result.data[0].address
-        p(addr);   
+       // p(addr);   
     });
 
     return addr;
 }
 
 /* IMPLEMENT THIS ONE */
+/* Actions to perform after clickin the "Get Addr From Name" link */
 function getAddrLinkClick() {
+
+    // find parent node and get values from the input fields
+    let currentBoxName = this.parentNode.children[1].value;
+    let currentBoxAddr = this.parentNode.children[3].value
+
+    p(`${currentBoxName} - ${currentBoxAddr}`);
+
+    // request a Promise, and when fullfilled, change the value of the input box for Addr
+    getAddrByName(currentBoxName).then(val => {
+        this.parentNode.children[3].value = val;
+    });
 
 }
