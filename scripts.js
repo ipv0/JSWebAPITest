@@ -428,7 +428,6 @@ async function getAddrByName(name) {
     return addr;
 }
 
-/* IMPLEMENT THIS ONE */
 /* Actions to perform after clickin the "Get Addr From Name" link */
 function getAddrLinkClick() {
 
