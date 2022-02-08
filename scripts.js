@@ -5,7 +5,7 @@ const heliumAPI = {
 
     hotspotsByName: "https://api.helium.io/v1/hotspots/name/",
     hotspotsNameSearch: "https://api.helium.io/v1/hotspots/name?search=",
-    
+
     rewardsForHotspot: (addr, time) => {
         return "https://api.helium.io/v1/hotspots/" + addr + "/rewards/sum?min_time=" + time;
     }
@@ -35,16 +35,16 @@ const p = (text) => console.log(text);
 
 
 /* --- JQuery animations and stuff --- */
-$(document).ready(function() {
+$(document).ready(function () {
     console.log('jQuery: document ready event')
     $('#navbar').hide().fadeIn(300);
 
-    $('#navbar a').click(function() {
+    $('#navbar a').click(function () {
         $(this).fadeOut(60).fadeIn(40);
     })
 
     // If nothing is saved in localstorage, put default values in there
-    if( !window.localStorage.getItem('hotspots') ) {
+    if (!window.localStorage.getItem('hotspots')) {
         window.localStorage.setItem('hotspots', JSON.stringify(heliumHotspots));
     }
 
@@ -57,11 +57,11 @@ let assignEventListeners = function () {
     p('assignEventListeners func called');
 
     const weatherLink = document.querySelector('#link-2');
-    const apiLink     = document.querySelector('#link-3');
-    const setupLink   = document.querySelector('#link-4');
-    
+    const apiLink = document.querySelector('#link-3');
+    const setupLink = document.querySelector('#link-4');
+
     const loadWeatherButton = document.querySelector('#loadWeatherButton');
-    
+
 
     apiLink.addEventListener('click', function () {
         apiLinkClick();
@@ -73,11 +73,11 @@ let assignEventListeners = function () {
 
     setupLink.addEventListener('click', setupLinkClick);
 
-    }
+}
 
-function testButtonClick () {
+function testButtonClick() {
     p('testButton Click');
-   
+
     getWeatherData();
     //$("#dialog").dialog();
 
@@ -89,10 +89,10 @@ function reloadHeliumAPIButtonClick() {
     p('reload helium api button clicked');
 }
 
-/* Weather Button / Menu Link */ 
+/* Weather Button / Menu Link */
 function weatherLinkClick() {
-   
- 
+
+
     let sampleText = `
     <br />
     <button id = 'loadWeatherButton' class = 'button'>
@@ -104,7 +104,7 @@ function weatherLinkClick() {
 
     // creates the container for data boxes, then adds individual boxes 
     // createDataBox(Box CSS Id, box FadeIn Time, Box Content)
-    createDataBoxesDiv(function() {
+    createDataBoxesDiv(function () {
         createDataBox('temperatureBox', 500, 'Temp.');
         createDataBox('feelsLikeBox', 800, 'Feels File');
         createDataBox('tempMinBox', 1100, 'Temp. Min.');
@@ -139,13 +139,13 @@ function apiLinkClick() {
     createBox("Helium API", sampleText);
 
     // create a div that contains individual data boxes
-    createDataBoxesDiv(function() {
+    createDataBoxesDiv(function () {
 
         // create databoxes for each ently in the list of hotspots, give them
         // ID's accordingly, number them from 1 to n
         let counter = 1;
         for (let hotspot of fromLocalStorage) {
-            createDataBox('apiBox'+counter, 200, hotspot.name);
+            createDataBox('apiBox' + counter, 200, hotspot.name);
             counter++;
         }
 
@@ -153,7 +153,7 @@ function apiLinkClick() {
 
     /* Assign the click event listener to the helium reload button */
     let reloadHeliumAPIbutton = document.querySelector('#reloadHeliumAPIButton');
-    reloadHeliumAPIButton.addEventListener('click', reloadHeliumAPIButtonClick);
+    reloadHeliumAPIbutton.addEventListener('click', reloadHeliumAPIButtonClick);
 
     getHeliumAPIData();
 
@@ -163,13 +163,13 @@ function apiLinkClick() {
 function setupLinkClick() {
     p('link4 click');
 
-    createBox("Setup", "Configure which hotspots to keep track of.");
+    createBox("Setup", "<p>Configure which hotspots to keep track of.</>");
 
     // take that array from local storage
     let fromLocalStorage = JSON.parse(window.localStorage.getItem('hotspots'));
 
     // iterate thru that array of objects creating databoxes for each one
-    createDataBoxesDiv(function() {
+    createDataBoxesDiv(function () {
         let counter = 1;
 
         for (let item of fromLocalStorage) {
@@ -190,37 +190,44 @@ function setupLinkClick() {
             title=\'Click here to retrieve the blockchain addres of the hotspot by name.\'> Get address from name </a>
             `;
 
-            createDataBox('setupBox'+counter, 100, formHTML);
+            createDataBox('setupBox' + counter, 100 * counter, formHTML);
 
             document.querySelector(`#inputFieldGetAddrLink${counter}`)
-            .addEventListener('click', getAddrLinkClick);
+                .addEventListener('click', getAddrLinkClick);
 
 
             counter++;
         }
 
+        /* ***** Adding the + button that adds a new hotspot ***** */
+
         let addHotspotButtonHTML = `
-        <button class='button add-hotspot-button'>+ </button>
+        
+        <button id = 'addHotspotButton' class='button add-hotspot-button'>+</button>
         `;
 
-        createDataBox('addHotspotButton', 100, addHotspotButtonHTML);
+        createDataBox('addHotspotButtonBox', 100 * counter, addHotspotButtonHTML);
 
+        //document.querySelector('#addHotspotButton').myParam = counter;
 
-    }); 
+        document.querySelector('#addHotspotButton')
+            .addEventListener('click', addHotspotButtonClick);
+
+    });
 
     /* Create a button to update the heliumHotspots array of objects. Assign function to it. */
     let updateButton = document.createElement("button");
     updateButton.className = "button";
     updateButton.innerHTML = "Update Settings";
-    updateButton.addEventListener("click", updateInputFields)
-    
-    let boxContent = document.querySelector("#boxContent");     
+    updateButton.addEventListener("click", updateSettings)
+
+    let boxContent = document.querySelector("#boxContent");
     boxContent.appendChild(updateButton);
 
-     
+
 }
 
-let createBox = function(boxTitle, BoxContentHTML) {
+function createBox(boxTitle, BoxContentHTML) {
 
     $('#box').remove();
 
@@ -229,14 +236,16 @@ let createBox = function(boxTitle, BoxContentHTML) {
     box.classList.add('box-class'); //adding class
     box.id = 'box'; // adding an id
     box.style.display = 'none'; //making it hidden, so it can later be shown via jQuery
-    
+
+
     /* creating box title */
     let boxTitleElement = document.createElement('p');
     boxTitleElement.classList.add('box-title-class');
     boxTitleElement.innerText = boxTitle;
-    
+
     document.getElementById('content').append(box); //add the box to the DOM
-    box.append(boxTitleElement);//add the box title element to the box
+    box.append(boxTitleElement); //add the box title element to the box
+
 
     /* the box that contains the actual thing we need to display */
     let boxContent = document.createElement('div');
@@ -256,7 +265,7 @@ let createBox = function(boxTitle, BoxContentHTML) {
 function createDataBoxesDiv(func) {
     let boxContent = document.querySelector('#boxContent');
     let dataBoxesDiv = document.createElement('div');
-   
+
     dataBoxesDiv.id = 'dataBoxesDiv';
 
     boxContent.append(dataBoxesDiv);
@@ -291,29 +300,29 @@ function convertTemperature(kelvins) {
 function getWeatherData() {
     let temp = 0;
     let apik = "3045dd712ffe6e702e3245525ac7fa38"
-    let query = 'https://api.openweathermap.org/data/2.5/weather?q=Toronto'+'&appid='+apik;
+    let query = 'https://api.openweathermap.org/data/2.5/weather?q=Toronto' + '&appid=' + apik;
 
     fetch(query)
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
 
-        temp = convertTemperature(data.main.temp);
-        document.querySelector('#temperatureBox').innerHTML = 
-        "Temp. <br />" + temp + " &#176;C";
+            temp = convertTemperature(data.main.temp);
+            document.querySelector('#temperatureBox').innerHTML =
+                "Temp. <br />" + temp + " &#176;C";
 
-        temp = convertTemperature(data.main.temp_min);
-        document.querySelector('#tempMinBox').innerHTML = 
-        "Temp. Min.<br />" + temp + " &#176;C";
+            temp = convertTemperature(data.main.temp_min);
+            document.querySelector('#tempMinBox').innerHTML =
+                "Temp. Min.<br />" + temp + " &#176;C";
 
-        document.querySelector('#humidityBox').innerHTML = 
-        "Humidity <br />" + data.main.humidity + "%";
+            document.querySelector('#humidityBox').innerHTML =
+                "Humidity <br />" + data.main.humidity + "%";
 
-        temp = convertTemperature(data.main.feels_like);
-        document.querySelector('#feelsLikeBox').innerHTML = 
-        "Feels Like <br />" + temp + " &#176;C";
-        
-    });
+            temp = convertTemperature(data.main.feels_like);
+            document.querySelector('#feelsLikeBox').innerHTML =
+                "Feels Like <br />" + temp + " &#176;C";
+
+        });
 }
 
 /* Get data for Helium hotspot(s) */
@@ -328,7 +337,7 @@ async function getHeliumAPIData() {
     let counter = 1;
     for (item of heliumHotspots) {
 
-       // p(item)
+        // p(item)
 
         let query_name = heliumAPI.hotspotsByName + item.name;
         let query_rewards_week = heliumAPI.rewardsForHotspot(item.addr, "-1%20week")
@@ -338,47 +347,47 @@ async function getHeliumAPIData() {
         p(query_rewards_week);
 
         await fetch(query_name)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            p(data.data[0].name);
-            document.querySelector('#apiBox'+counter).innerHTML = 
-            "<h5 class=\'data-box-header\'>Hotspot: </h5>" + 
-            "<p class=\'small-text\'>" + data.data[0].name + "</p>";     
-        });
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                p(data.data[0].name);
+                document.querySelector('#apiBox' + counter).innerHTML =
+                    "<h5 class=\'data-box-header\'>Hotspot: </h5>" +
+                    "<p class=\'small-text\'>" + data.data[0].name + "</p>";
+            });
 
         await fetch(query_rewards_day)
-        .then(response => response.json())
-        .then(data => {
-            p(data);
-            document.querySelector('#apiBox'+counter).innerHTML += 
-            "<h6 class=\'data-box-header\'>Rewards Per Day: </h6>" + 
-            "<p class=\'small-text\'>" + Number(data.data.total).toFixed(3) + 
-            " HNT </p>";
-            
-        }).then(
+            .then(response => response.json())
+            .then(data => {
+                p(data);
+                document.querySelector('#apiBox' + counter).innerHTML +=
+                    "<h6 class=\'data-box-header\'>Rewards Per Day: </h6>" +
+                    "<p class=\'small-text\'>" + Number(data.data.total).toFixed(3) +
+                    " HNT </p>";
 
-        await fetch(query_rewards_week)
-        .then(response => response.json())
-        .then(data => {
-            p(data);
-            document.querySelector('#apiBox'+counter).innerHTML += 
-            "<h6 class=\'data-box-header\'>Rewards Per Week: </h6>" + 
-            "<p class=\'small-text\'>" + Number(data.data.total).toFixed(3) + 
-            " HNT </p>";
-            
-        })).then(
+            }).then(
 
-        await fetch(query_rewards_month)
-        .then(response => response.json())
-        .then(data => {
-            p(data);
-            document.querySelector('#apiBox'+counter).innerHTML += 
-            "<h6 class=\'data-box-header\'>Rewards Per Month: </h6>" + 
-            "<p class=\'small-text\'>" + Number(data.data.total).toFixed(3) + 
-            " HNT </p>";
-            
-        }));
+                await fetch(query_rewards_week)
+                    .then(response => response.json())
+                    .then(data => {
+                        p(data);
+                        document.querySelector('#apiBox' + counter).innerHTML +=
+                            "<h6 class=\'data-box-header\'>Rewards Per Week: </h6>" +
+                            "<p class=\'small-text\'>" + Number(data.data.total).toFixed(3) +
+                            " HNT </p>";
+
+                    })).then(
+
+                        await fetch(query_rewards_month)
+                            .then(response => response.json())
+                            .then(data => {
+                                p(data);
+                                document.querySelector('#apiBox' + counter).innerHTML +=
+                                    "<h6 class=\'data-box-header\'>Rewards Per Month: </h6>" +
+                                    "<p class=\'small-text\'>" + Number(data.data.total).toFixed(3) +
+                                    " HNT </p>";
+
+                            }));
 
         counter++;
     }
@@ -387,7 +396,7 @@ async function getHeliumAPIData() {
 
 /* Read input fields from the Setup page, update heliumHotspots array accordingly */
 
-function updateInputFields() {
+function updateSettings() {
     let fields = document.getElementsByClassName("input-field-name");
     let addrFields = document.getElementsByClassName("input-field-addr");
     p(fields);
@@ -418,12 +427,12 @@ async function getAddrByName(name) {
     query_name = heliumAPI.hotspotsByName + name;
 
     await fetch(query_name)
-    .then(response => response.json())
-    .then(result => {
-        console.log(result);
-        addr = result.data[0].address
-       // p(addr);   
-    });
+        .then(response => response.json())
+        .then(result => {
+            console.log(result);
+            addr = result.data[0].address
+            // p(addr);   
+        });
 
     return addr;
 }
@@ -441,5 +450,41 @@ function getAddrLinkClick() {
     getAddrByName(currentBoxName).then(val => {
         this.parentNode.children[3].value = val;
     });
+
+}
+
+/* TODO deal with the CSS HELL with the plus button looking wonky */
+/* When User Clicks the Plus button to add a new hotspot */
+function addHotspotButtonClick(evt) {
+    //evt.target.parentNode.setAttribute('display', 'none');
+    //evt.target.hide;
+
+    $(evt.target.parentNode).hide();
+    
+    let n = evt.target.parentNode;
+    let counter = document.querySelectorAll('.dataBox').length;
+
+    //evt.target.parentNode.remove();
+
+    let formHTML = `
+    <label for=\'hotspotName${counter}\' class=\'input-label\'>
+    Hotspot # ${counter}
+    </label>
+    <input type=\'text\' name=\'hotspotName${counter}\' class=\'input-field-name\' 
+    id=\'hotspotName${counter}\' 
+    value=\'\'>
+    <label for=\'hotspotAddr${counter}\' class=\'input-label\' id = \'blockchainAddrLabel\'>
+    Blockchain Address:
+    </label>
+    <input type=\'text\' name=\'hotspotAddr${counter}\' class=\'input-field-addr\' 
+    id=\'hotspotName${counter}\' value=\'\'>
+    <a href = \'#\' id='inputFieldGetAddrLink${counter}' class = \'input-field-get-addr-link\'
+    title=\'Click here to retrieve the blockchain addres of the hotspot by name.\'> Get address from name </a>
+    `;
+
+    createDataBox('setupBox' + counter, 100 * counter, formHTML);
+
+    document.querySelector(`#inputFieldGetAddrLink${counter}`)
+        .addEventListener('click', getAddrLinkClick);
 
 }
