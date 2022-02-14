@@ -152,10 +152,9 @@ ul {
 /* Data box class for displaying
  * short pieces of info */
 .dataBox {
-    display: inline-table;
     width: 25%;
     min-height: 4em;
-
+    padding: 5px;
     /* float: left; */
     
     background-color: rgba(209, 232, 237, 0.33);
@@ -165,8 +164,9 @@ ul {
 
     text-align: center;
     font-size: 17px;
-    padding-top: 10px;
-    line-height: 30px;;
+    line-height: 30px;
+
+    float: left;
  }
 
  #loadWeatherButton {
@@ -242,4 +242,10 @@ p.tiny-text {
 #blockchainAddrLabel {
     font-size: 0.75em;
     margin-bottom: -0.6em;
+}
+
+/* Clearer div */
+
+.clear {
+    clear:both;
 }

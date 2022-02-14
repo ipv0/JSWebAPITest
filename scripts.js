@@ -270,6 +270,11 @@ function createDataBoxesDiv(func) {
 
     boxContent.append(dataBoxesDiv);
 
+    /* Insert the clearer div bc the databoxes are floated */
+    clearer = document.createElement('div');
+    clearer.classList.add('clear');
+    boxContent.append(clearer);
+
     func();
 }
 
@@ -453,19 +458,19 @@ function getAddrLinkClick() {
 
 }
 
-/* TODO deal with the CSS HELL with the plus button looking wonky */
-/* When User Clicks the Plus button to add a new hotspot */
+/* TODO deal with the CSS hell with the plus button looking wonky 
+   when User Clicks the Plus button to add a new hotspot 
+   (it's been partialy dealt with) */
 function addHotspotButtonClick(evt) {
-    //evt.target.parentNode.setAttribute('display', 'none');
-    //evt.target.hide;
-
-    $(evt.target.parentNode).hide();
     
-    let n = evt.target.parentNode;
+    // get the number of databoxes, we'll need it to assign the right number to the new databox
     let counter = document.querySelectorAll('.dataBox').length;
 
-    //evt.target.parentNode.remove();
+    // remove the plus sign button and its event listener
+    evt.target.parentNode.remove();
+    evt.target.removeEventListener('click', addHotspotButtonClick);
 
+    // HTML for the new databox that we're adding
     let formHTML = `
     <label for=\'hotspotName${counter}\' class=\'input-label\'>
     Hotspot # ${counter}
@@ -482,9 +487,16 @@ function addHotspotButtonClick(evt) {
     title=\'Click here to retrieve the blockchain addres of the hotspot by name.\'> Get address from name </a>
     `;
 
-    createDataBox('setupBox' + counter, 100 * counter, formHTML);
-
+    createDataBox('setupBox' + counter, 300, formHTML);
     document.querySelector(`#inputFieldGetAddrLink${counter}`)
         .addEventListener('click', getAddrLinkClick);
+
+
+    /* add the plus button again, and the event listener too */    
+    let addHotspotButtonHTML = `
+        <button id = 'addHotspotButton' class='button add-hotspot-button'>+</button>`;
+    createDataBox('addHotspotButtonBox', 100, addHotspotButtonHTML);
+    document.querySelector('#addHotspotButton')
+        .addEventListener('click', addHotspotButtonClick);
 
 }
