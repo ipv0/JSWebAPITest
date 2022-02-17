@@ -500,3 +500,22 @@ function addHotspotButtonClick(evt) {
         .addEventListener('click', addHotspotButtonClick);
 
 }
+
+/* TODO: use https://api.alternative.me/v2/ticker/helium/?convert=CAD api link to fetch current
+   HNT to CAd conversion rate */
+
+async function getHNTPrice(baseCurrency) {
+
+    query = 'https://api.alternative.me/v2/ticker/helium/?convert=' + baseCurrency;
+
+    await fetch(query)
+        .then(response => response.json())
+        .then(result => {
+            console.log(result);
+            priceValue = result.data[10993].quotes.CAD.price;
+            heliumAPI.price = priceValue;
+            console.log(priceValue.toFixed(2));
+
+            
+        })
+}
