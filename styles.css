@@ -187,7 +187,13 @@ ul {
  }
 
 p.small-text {
-    font-size: 0.7em;
+    font-size: 0.75em;
+}
+
+p.small-text-cash {
+    font-size: 0.65em;
+    margin-top: -15px;
+    padding: 0;
 }
 
 p.tiny-text {

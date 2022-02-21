@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 
 /* Object with URI's for accessing various parts of the Helium network API */
-const heliumAPI = {
+let heliumAPI = {
 
     hotspotsByName: "https://api.helium.io/v1/hotspots/name/",
     hotspotsNameSearch: "https://api.helium.io/v1/hotspots/name?search=",
@@ -30,6 +30,10 @@ let heliumHotspots = [
     }
 ]
 
+let prefs = {
+    HNTPrice: '',
+    currency: 'CAD'
+}
 
 const p = (text) => console.log(text);
 
@@ -49,6 +53,8 @@ $(document).ready(function () {
     }
 
     assignEventListeners();
+
+    getHNTPrice('CAD');
 
 });
 
@@ -351,6 +357,7 @@ async function getHeliumAPIData() {
 
         p(query_rewards_week);
 
+/* Gets the name of the box */
         await fetch(query_name)
             .then(response => response.json())
             .then(data => {
@@ -361,6 +368,7 @@ async function getHeliumAPIData() {
                     "<p class=\'small-text\'>" + data.data[0].name + "</p>";
             });
 
+/* gets HNT rewards for a day for the box */
         await fetch(query_rewards_day)
             .then(response => response.json())
             .then(data => {
@@ -368,7 +376,11 @@ async function getHeliumAPIData() {
                 document.querySelector('#apiBox' + counter).innerHTML +=
                     "<h6 class=\'data-box-header\'>Rewards Per Day: </h6>" +
                     "<p class=\'small-text\'>" + Number(data.data.total).toFixed(3) +
-                    " HNT </p>";
+                    " HNT </p>" + 
+                    "<p class = \'small-text-cash\'> (" + 
+                    (Number(data.data.total) * prefs.HNTPrice).toFixed(2) + 
+                    " CAD)</p>";
+                    ;
 
             }).then(
 
@@ -379,7 +391,11 @@ async function getHeliumAPIData() {
                         document.querySelector('#apiBox' + counter).innerHTML +=
                             "<h6 class=\'data-box-header\'>Rewards Per Week: </h6>" +
                             "<p class=\'small-text\'>" + Number(data.data.total).toFixed(3) +
-                            " HNT </p>";
+                            " HNT </p>" + 
+                            "<p class = \'small-text-cash\'> (" + 
+                            (Number(data.data.total) * prefs.HNTPrice).toFixed(2) + 
+                            " CAD)</p>";
+                            ;
 
                     })).then(
 
@@ -390,7 +406,11 @@ async function getHeliumAPIData() {
                                 document.querySelector('#apiBox' + counter).innerHTML +=
                                     "<h6 class=\'data-box-header\'>Rewards Per Month: </h6>" +
                                     "<p class=\'small-text\'>" + Number(data.data.total).toFixed(3) +
-                                    " HNT </p>";
+                                    " HNT </p>" + 
+                                    "<p class = \'small-text-cash\'> (" + 
+                                    (Number(data.data.total) * prefs.HNTPrice).toFixed(2) + 
+                                    " CAD)</p>";
+                                    ;
 
                             }));
 
@@ -513,7 +533,7 @@ async function getHNTPrice(baseCurrency) {
         .then(result => {
             console.log(result);
             priceValue = result.data[10993].quotes.CAD.price;
-            heliumAPI.price = priceValue;
+            prefs.HNTPrice = priceValue;
             console.log(priceValue.toFixed(2));
 
             
