@@ -13,7 +13,7 @@ body * {
 #navbar {
     display:flex;
     height: 55px;
-    width: 50em; 
+    width: 60em; 
     background-color: rgb(209, 237, 237, 0.28);
     border-radius: 4px;
     margin: 0 auto;
@@ -62,7 +62,7 @@ ul {
 }
 
 .box-class {
-    width: 50em;
+    width: 60em;
     height: auto;
     background-color: rgb(209, 237, 237, 0.28);
     margin: 5px auto;
@@ -152,7 +152,7 @@ ul {
 /* Data box class for displaying
  * short pieces of info */
 .dataBox {
-    width: 25%;
+    width: 22%;
     min-height: 4em;
     padding: 5px;
     /* float: left; */
@@ -193,7 +193,6 @@ p.small-text {
 p.small-text-cash {
     font-size: 0.65em;
     margin-top: -15px;
-    padding: 0;
 }
 
 p.tiny-text {
@@ -255,3 +254,11 @@ p.tiny-text {
 .clear {
     clear:both;
 }
+
+.HNTPriceDisplay {
+    text-align: center;
+    margin: 0 0 1.5em 0;
+    font-weight: bold;
+    font-size: 0.8em;
+}
+

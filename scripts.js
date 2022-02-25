@@ -91,6 +91,7 @@ function testButtonClick() {
 }
 
 function reloadHeliumAPIButtonClick() {
+    getHNTPrice(prefs.currency);
     getHeliumAPIData();
     p('reload helium api button clicked');
 }
@@ -129,18 +130,17 @@ function weatherLinkClick() {
 
 /* ------------------------------------------- */
 function apiLinkClick() {
-    p('API Button clicked');
+    p('HELIUM Button clicked');
     /* write the rest here... */
 
     // load the list of hotspots (array of objects) from localStorage
     let fromLocalStorage = JSON.parse(window.localStorage.getItem('hotspots'));
 
     let sampleText = `
-    <br />
+    <p class = 'HNTPriceDisplay'> 1 HNT = ${prefs.HNTPrice} ${prefs.currency}</p>
     <button id = 'reloadHeliumAPIButton' class = 'button'>
     Reload Helium API Data
     </button>
-    <p id = "stuffText">  </p>
     `;
     createBox("Helium API", sampleText);
 
@@ -516,6 +516,7 @@ function addHotspotButtonClick(evt) {
     let addHotspotButtonHTML = `
         <button id = 'addHotspotButton' class='button add-hotspot-button'>+</button>`;
     createDataBox('addHotspotButtonBox', 100, addHotspotButtonHTML);
+
     document.querySelector('#addHotspotButton')
         .addEventListener('click', addHotspotButtonClick);
 
@@ -534,8 +535,6 @@ async function getHNTPrice(baseCurrency) {
             console.log(result);
             priceValue = result.data[10993].quotes.CAD.price;
             prefs.HNTPrice = priceValue;
-            console.log(priceValue.toFixed(2));
-
-            
+            console.log(priceValue.toFixed(2));        
         })
 }
