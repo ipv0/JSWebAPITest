@@ -18,7 +18,23 @@ body * {
     border-radius: 4px;
     margin: 0 auto;
     border: 1px solid #304a4b17;
-    /* text-align: center; */
+}
+
+.footer {
+    display:flex;
+    height: 25px;
+    width: 60em; 
+    background-color: rgb(209, 237, 237, 0.28);
+    border-radius: 4px;
+    margin: 5px auto 0 auto;
+    border: 1px solid #304a4b17;
+}
+
+.footer-text {
+    color: rgba(14, 13, 48, 0.638);
+    font-size: 0.87em;
+    padding: 5px;
+    margin: 0 auto;
 }
 
 ul {

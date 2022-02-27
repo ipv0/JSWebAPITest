@@ -35,6 +35,12 @@ let prefs = {
     currency: 'CAD'
 }
 
+const footerInnerHTML = `
+<p class = 'footer-text'> 
+Use this app to quickly look up the rewards for the hotspots you're interested in. 
+</p>
+`;
+
 const p = (text) => console.log(text);
 
 
@@ -236,6 +242,8 @@ function setupLinkClick() {
 function createBox(boxTitle, BoxContentHTML) {
 
     $('#box').remove();
+    $('.footer').remove();
+
 
     /* creating the box element where my content will be displayed */
     let box = document.createElement('div'); //creating the actual element
@@ -260,7 +268,14 @@ function createBox(boxTitle, BoxContentHTML) {
     boxContent.innerHTML = BoxContentHTML;
     box.append(boxContent);
 
-    $('#box').fadeIn(200);
+    $('#box').fadeIn(150);
+
+    let footer = document.createElement('div');
+    footer.classList.add('footer');
+    footer.id = 'footer';
+    footer.innerHTML = footerInnerHTML;
+
+    document.querySelector('#container').append(footer);
 
 }
 
