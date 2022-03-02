@@ -35,7 +35,7 @@ let prefs = {
     currency: 'CAD'
 }
 
-const footerInnerHTML = `
+let footerInnerHTML = `
 <p class = 'footer-text'> 
 Use this app to quickly look up the rewards for the hotspots you're interested in. 
 </p>
@@ -60,7 +60,7 @@ $(document).ready(function () {
 
     assignEventListeners();
 
-    getHNTPrice('CAD');
+    getHNTPrice(prefs.currency);
 
 });
 
@@ -143,7 +143,7 @@ function apiLinkClick() {
     let fromLocalStorage = JSON.parse(window.localStorage.getItem('hotspots'));
 
     let sampleText = `
-    <p class = 'HNTPriceDisplay'> 1 HNT = ${prefs.HNTPrice} ${prefs.currency}</p>
+    <p class = 'HNT-price-display'> 1 HNT = ${prefs.HNTPrice} ${prefs.currency}</p>
     <button id = 'reloadHeliumAPIButton' class = 'button'>
     Reload Helium API Data
     </button>
@@ -153,7 +153,7 @@ function apiLinkClick() {
     // create a div that contains individual data boxes
     createDataBoxesDiv(function () {
 
-        // create databoxes for each ently in the list of hotspots, give them
+        // create databoxes for each entry in the list of hotspots, give them
         // ID's accordingly, number them from 1 to n
         let counter = 1;
         for (let hotspot of fromLocalStorage) {
@@ -220,8 +220,6 @@ function setupLinkClick() {
 
         createDataBox('addHotspotButtonBox', 100 * counter, addHotspotButtonHTML);
 
-        //document.querySelector('#addHotspotButton').myParam = counter;
-
         document.querySelector('#addHotspotButton')
             .addEventListener('click', addHotspotButtonClick);
 
@@ -235,6 +233,11 @@ function setupLinkClick() {
 
     let boxContent = document.querySelector("#boxContent");
     boxContent.appendChild(updateButton);
+
+    /* Automatically replace spaces with dashes for the hotspot name boxes */
+    $('.input-field-name').on("keyup", function () {
+        this.value = this.value.replace(/ /g, "-");
+    });
 
 
 }
@@ -270,6 +273,7 @@ function createBox(boxTitle, BoxContentHTML) {
 
     $('#box').fadeIn(150);
 
+    /* adding the footer */
     let footer = document.createElement('div');
     footer.classList.add('footer');
     footer.id = 'footer';
@@ -315,6 +319,16 @@ function createDataBox(boxId, boxFadeTime, boxContentHTML) {
 
     $("#" + boxId).hide();
     $("#" + boxId).fadeIn(boxFadeTime);
+
+    
+    /* For the SETUP page,
+       Automatically replace spaces with dashes for the hotspot name boxes 
+       And change them to lowercase as well, otherwise it won't work
+    */
+    $('.input-field-name').on("keyup", function () {
+        this.value = this.value.replace(/ /g, "-").toLowerCase();
+    });
+    
 }
 
 
@@ -465,7 +479,7 @@ async function getAddrByName(name) {
     let addr;
 
     query_name = heliumAPI.hotspotsByName + name;
-
+    p('--- ' + query_name)
     await fetch(query_name)
         .then(response => response.json())
         .then(result => {
@@ -482,9 +496,9 @@ function getAddrLinkClick() {
 
     // find parent node and get values from the input fields
     let currentBoxName = this.parentNode.children[1].value;
-    let currentBoxAddr = this.parentNode.children[3].value
+    let currentBoxAddr = this.parentNode.children[3].value;
 
-    p(`${currentBoxName} - ${currentBoxAddr}`);
+    p(`----- ${currentBoxName} - ${currentBoxAddr}`);
 
     // request a Promise, and when fullfilled, change the value of the input box for Addr
     getAddrByName(currentBoxName).then(val => {

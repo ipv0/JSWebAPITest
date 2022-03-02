@@ -234,9 +234,11 @@ p.tiny-text {
     margin-bottom: -0.2em;
 }
 
+/* ************* Input field name fot the setup page ************ */
 .input-field-name{
     padding: 3px;
     margin: auto 0.52em;
+    text-transform: lowercase;
 }
 
 
@@ -271,7 +273,7 @@ p.tiny-text {
     clear:both;
 }
 
-.HNTPriceDisplay {
+.HNT-price-display {
     text-align: center;
     margin: 0 0 1.5em 0;
     font-weight: bold;
