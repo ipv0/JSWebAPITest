@@ -365,43 +365,41 @@ function getWeatherData() {
         });
 }
 
-/* Get data for Helium hotspot(s) */
-/* TODO !!! Iterate thru helium hotspots requesting data for each one !!!*/
+
+/* Get data for Helium hotspots. Iterate thru hotspots requesting data for each one */
+
 async function getHeliumAPIData() {
 
     let fromLocalStorage = JSON.parse(window.localStorage.getItem('hotspots'));
     heliumHotspots = fromLocalStorage;
 
-    p("heliumHotspots array: " + heliumHotspots);
+    //p("heliumHotspots array: " + heliumHotspots);
 
     let counter = 1;
-    for (item of heliumHotspots) {
 
-        // p(item)
+    for (item of heliumHotspots) {
 
         let query_name = heliumAPI.hotspotsByName + item.name;
         let query_rewards_week = heliumAPI.rewardsForHotspot(item.addr, "-1%20week")
         let query_rewards_month = heliumAPI.rewardsForHotspot(item.addr, "-4%20week")
         let query_rewards_day = heliumAPI.rewardsForHotspot(item.addr, "-1%20day")
 
-        p(query_rewards_week);
+        //p(query_rewards_week);
 
-/* Gets the name of the box */
+        /* Get the name of the box */
         await fetch(query_name)
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 p(data.data[0].name);
                 document.querySelector('#apiBox' + counter).innerHTML =
                     "<h5 class=\'data-box-header\'>Hotspot: </h5>" +
                     "<p class=\'small-text\'>" + data.data[0].name + "</p>";
             });
 
-/* gets HNT rewards for a day for the box */
+        /* get HNT rewards for a day for the box */
         await fetch(query_rewards_day)
             .then(response => response.json())
             .then(data => {
-                p(data);
                 document.querySelector('#apiBox' + counter).innerHTML +=
                     "<h6 class=\'data-box-header\'>Rewards Per Day: </h6>" +
                     "<p class=\'small-text\'>" + Number(data.data.total).toFixed(3) +
@@ -410,38 +408,35 @@ async function getHeliumAPIData() {
                     (Number(data.data.total) * prefs.HNTPrice).toFixed(2) + 
                     " CAD)</p>";
                     ;
+            });
 
-            }).then(
+        /* get HNT rewards for a week for the box */
+        await fetch(query_rewards_week)
+            .then(response => response.json())
+            .then(data => {
+                document.querySelector('#apiBox' + counter).innerHTML +=
+                    "<h6 class=\'data-box-header\'>Rewards Per Week: </h6>" +
+                    "<p class=\'small-text\'>" + Number(data.data.total).toFixed(3) +
+                    " HNT </p>" + 
+                    "<p class = \'small-text-cash\'> (" + 
+                    (Number(data.data.total) * prefs.HNTPrice).toFixed(2) + 
+                    " CAD)</p>";
+            });
 
-                await fetch(query_rewards_week)
-                    .then(response => response.json())
-                    .then(data => {
-                        p(data);
-                        document.querySelector('#apiBox' + counter).innerHTML +=
-                            "<h6 class=\'data-box-header\'>Rewards Per Week: </h6>" +
-                            "<p class=\'small-text\'>" + Number(data.data.total).toFixed(3) +
-                            " HNT </p>" + 
-                            "<p class = \'small-text-cash\'> (" + 
-                            (Number(data.data.total) * prefs.HNTPrice).toFixed(2) + 
-                            " CAD)</p>";
-                            ;
+        /* get HNT rewards for a month for the box */
+        await fetch(query_rewards_month)
+            .then(response => response.json())
+            .then(data => {
+                document.querySelector('#apiBox' + counter).innerHTML +=
+                    "<h6 class=\'data-box-header\'>Rewards Per Month: </h6>" +
+                    "<p class=\'small-text\'>" + Number(data.data.total).toFixed(3) +
+                    " HNT </p>" + 
+                    "<p class = \'small-text-cash\'> (" + 
+                    (Number(data.data.total) * prefs.HNTPrice).toFixed(2) + 
+                    " CAD)</p>";
+                    ;
 
-                    })).then(
-
-                        await fetch(query_rewards_month)
-                            .then(response => response.json())
-                            .then(data => {
-                                p(data);
-                                document.querySelector('#apiBox' + counter).innerHTML +=
-                                    "<h6 class=\'data-box-header\'>Rewards Per Month: </h6>" +
-                                    "<p class=\'small-text\'>" + Number(data.data.total).toFixed(3) +
-                                    " HNT </p>" + 
-                                    "<p class = \'small-text-cash\'> (" + 
-                                    (Number(data.data.total) * prefs.HNTPrice).toFixed(2) + 
-                                    " CAD)</p>";
-                                    ;
-
-                            }));
+            });
 
         counter++;
     }
