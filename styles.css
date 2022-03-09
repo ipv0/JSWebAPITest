@@ -1,3 +1,52 @@
+
+@media screen and (max-width:980px) {
+ 
+    .box-class {
+        width: auto !important;
+    }
+
+    #dataBoxesDiv {
+        display: flex; 
+        flex-direction: column;
+    }
+
+    .dataBox {
+        width: 90% !important;
+        margin: 5px auto !important;
+    }
+
+    .footer {
+        width: auto !important;
+        font-size: 0.7em;
+    }
+
+    .box-content { 
+        margin: 0 !important;
+    }
+
+    .box-title-class {
+        margin: 25px auto !important;
+        padding-top: 10px !important;
+        font-size: 5em !important;
+        border-top: 5px solid #304a4b1b !important;
+        border-bottom: 5px solid #304a4b1b !important;
+      }
+
+      #reloadHeliumAPIButton {
+
+        transform: scale(2);
+        margin-bottom: 35px !important;
+      }
+
+      .HNT-price-display {
+        text-align: center;
+        margin: -10px 0 41px 0 !important;
+        font-weight: bold;
+        font-size: 1.5em !important;
+      }
+
+}
+
 body * {
     font-family: Arial, Helvetica, sans-serif;
     margin:0;
@@ -5,7 +54,7 @@ body * {
 }
 
 #container {
-    min-width: 800px;
+    /* min-width: 800px; */
     margin: 0 auto;
     /* display: flex; */
 }
