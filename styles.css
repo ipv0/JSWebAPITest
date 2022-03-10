@@ -39,9 +39,7 @@
       }
 
       .HNT-price-display {
-        text-align: center;
         margin: -10px 0 41px 0 !important;
-        font-weight: bold;
         font-size: 1.5em !important;
       }
 
@@ -303,7 +301,21 @@ p.tiny-text {
     font-size: 0.7em;
     text-align: left;
     margin: -1.2em 0 0 0.6em;
-    color: rgb(19, 58, 184);;
+    color: rgb(19, 58, 184);
+}
+
+/* *********  Delete hotspot button   ********* */
+.delete-hotspot-button {
+    padding: 2px 10px 2px 10px;
+    margin: -5px -5px 10px 0;
+    float: right;
+    clear: both;
+    font-size: 0.8em;
+    background-color:#c90d0d12;
+    border-color: rgba(70, 4, 4, 0.193);
+    border-top: none;
+    border-right: none;
+    color: rgba(58, 2, 2, 0.433) 
 }
 
 .input-field-get-addr-link:visited {

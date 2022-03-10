@@ -187,6 +187,9 @@ function setupLinkClick() {
         for (let item of fromLocalStorage) {
 
             let formHTML = `
+            <button class=\'button delete-hotspot-button\' title=\'Delete this hotspot.\'>
+            X
+            </button>
             <label for=\'hotspotName${counter}\' class=\'input-label\'>
             Hotspot # ${counter}
             </label>
@@ -516,6 +519,9 @@ function addHotspotButtonClick(evt) {
 
     // HTML for the new databox that we're adding
     let formHTML = `
+    <button class=\'button delete-hotspot-button\' title=\'Delete this hotspot.\'>
+    X
+    </button>
     <label for=\'hotspotName${counter}\' class=\'input-label\'>
     Hotspot # ${counter}
     </label>
