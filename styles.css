@@ -148,7 +148,7 @@ ul {
 }
 
 .box-content {
-    margin: 0 0 5px 30px;
+    margin: 0 0 5px 0;
     padding: 2px;
     height: auto;
     /* border: 1px solid #304a4b1b; */
@@ -221,7 +221,9 @@ ul {
     /* float: left; */
     
     background-color: rgba(209, 232, 237, 0.33);
-    margin: 5px 10px 5px 0; 
+    /* margin: 5px 10px 5px 0;  */
+    margin-left: 14px;
+    margin-top: 10px;
     border-radius: 4px;
     border: 1px solid #0c33342b;
 
