@@ -187,7 +187,8 @@ function setupLinkClick() {
         for (let item of fromLocalStorage) {
 
             let formHTML = `
-            <button class=\'button delete-hotspot-button\' title=\'Delete this hotspot.\'>
+            <button class=\'button delete-hotspot-button\' title=\'Delete this hotspot.\'
+            id=\'closeDataBoxButton${counter}\'>
             X
             </button>
             <label for=\'hotspotName${counter}\' class=\'input-label\'>
@@ -200,15 +201,20 @@ function setupLinkClick() {
             Blockchain Address:
             </label>
             <input type=\'text\' name=\'hotspotAddr${counter}\' class=\'input-field-addr\' 
-            id=\'hotspotName${counter}\' value=\'${item.addr}\'>
+            id=\'hotspotAddr${counter}\' value=\'${item.addr}\'>
             <a href = \'#\' id='inputFieldGetAddrLink${counter}' class = \'input-field-get-addr-link\'
-            title=\'Click here to retrieve the blockchain addres of the hotspot by name.\'> Get address from name </a>
+                title=\'Click here to retrieve the blockchain addres of the hotspot by name.\'> 
+                Get address from name 
+            </a>
             `;
 
             createDataBox('setupBox' + counter, 100 * counter, formHTML);
 
             document.querySelector(`#inputFieldGetAddrLink${counter}`)
                 .addEventListener('click', getAddrLinkClick);
+
+            document.querySelector(`#closeDataBoxButton${counter}`)
+                .addEventListener('click', closeDataBoxButtonClick)
 
 
             counter++;
@@ -482,7 +488,7 @@ async function getAddrByName(name) {
         .then(response => response.json())
         .then(result => {
             console.log(result);
-            addr = result.data[0].address
+            addr = result.data[0].address;
             // p(addr);   
         });
 
@@ -493,14 +499,17 @@ async function getAddrByName(name) {
 function getAddrLinkClick() {
 
     // find parent node and get values from the input fields
-    let currentBoxName = this.parentNode.children[1].value;
-    let currentBoxAddr = this.parentNode.children[3].value;
+    let currentBoxName = this.parentNode.children[2].value;
+    let currentBoxAddr = this.parentNode.children[4].value;
 
-    p(`----- ${currentBoxName} - ${currentBoxAddr}`);
+    p("***" + this.parentNode);
+    p(this.parentNode);
+
+    p(`name/addr from input boxes:  ${currentBoxName} - ${currentBoxAddr}`);
 
     // request a Promise, and when fullfilled, change the value of the input box for Addr
     getAddrByName(currentBoxName).then(val => {
-        this.parentNode.children[3].value = val;
+        this.parentNode.children[4].value = val;
     });
 
 }
@@ -519,7 +528,8 @@ function addHotspotButtonClick(evt) {
 
     // HTML for the new databox that we're adding
     let formHTML = `
-    <button class=\'button delete-hotspot-button\' title=\'Delete this hotspot.\'>
+    <button class=\'button delete-hotspot-button\' title=\'Delete this hotspot.\'
+    id=\'closeDataBoxButton${counter}\'>
     X
     </button>
     <label for=\'hotspotName${counter}\' class=\'input-label\'>
@@ -532,15 +542,20 @@ function addHotspotButtonClick(evt) {
     Blockchain Address:
     </label>
     <input type=\'text\' name=\'hotspotAddr${counter}\' class=\'input-field-addr\' 
-    id=\'hotspotName${counter}\' value=\'\'>
+    id=\'hotspotAddr${counter}\' value=\'\'>
     <a href = \'#\' id='inputFieldGetAddrLink${counter}' class = \'input-field-get-addr-link\'
     title=\'Click here to retrieve the blockchain addres of the hotspot by name.\'> Get address from name </a>
     `;
-
+    
     createDataBox('setupBox' + counter, 300, formHTML);
+
+    // Get Address link click
     document.querySelector(`#inputFieldGetAddrLink${counter}`)
         .addEventListener('click', getAddrLinkClick);
-
+    
+    // Close current dataBox button click
+    document.querySelector(`#closeDataBoxButton${counter}`)
+        .addEventListener('click', closeDataBoxButtonClick);
 
     /* add the plus button again, and the event listener too */    
     let addHotspotButtonHTML = `
@@ -550,7 +565,19 @@ function addHotspotButtonClick(evt) {
     document.querySelector('#addHotspotButton')
         .addEventListener('click', addHotspotButtonClick);
 
+    
+
 }
+
+
+/* Clicking on the X button that closes the databox in the Setup window */
+function closeDataBoxButtonClick(evt) {
+    p(this.parentNode); // parentNode of the X button is the databox itself.
+    $(this.parentNode).fadeOut(150, function() {
+        this.remove();
+    });
+}
+
 
 /* TODO: use https://api.alternative.me/v2/ticker/helium/?convert=CAD api link to fetch current
    HNT to CAd conversion rate */
