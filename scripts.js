@@ -157,15 +157,19 @@ function apiLinkClick() {
         // ID's accordingly, number them from 1 to n
         let counter = 1;
         for (let hotspot of fromLocalStorage) {
-            createDataBox('apiBox' + counter, 200, hotspot.name);
+            createDataBox('apiBox' + counter, 200, ``);
+
+            /*createDataBox('apiBox' + counter, 200, 
+                           `<div class=\'data-box-header-name\'>${hotspot.name}</div>`);*/
+
             counter++;
         }
 
     });
 
     /* Assign the click event listener to the helium reload button */
-    let reloadHeliumAPIbutton = document.querySelector('#reloadHeliumAPIButton');
-    reloadHeliumAPIbutton.addEventListener('click', reloadHeliumAPIButtonClick);
+    document.querySelector('#reloadHeliumAPIButton')
+        .addEventListener('click', reloadHeliumAPIButtonClick);
 
     getHeliumAPIData();
 
@@ -401,8 +405,9 @@ async function getHeliumAPIData() {
             .then(data => {
                 p(data.data[0].name);
                 document.querySelector('#apiBox' + counter).innerHTML =
-                    "<h5 class=\'data-box-header\'>Hotspot: </h5>" +
-                    "<p class=\'small-text\'>" + data.data[0].name + "</p>";
+                    "<div class=\'data-box-header-name\'>" +
+                    "<p class=\'small-text\'>" + data.data[0].name + "</p>" +
+                    "</div><div class=\'spacer\'></div>";
             });
 
         /* get HNT rewards for a day for the box */
@@ -546,7 +551,7 @@ function addHotspotButtonClick(evt) {
     <a href = \'#\' id='inputFieldGetAddrLink${counter}' class = \'input-field-get-addr-link\'
     title=\'Click here to retrieve the blockchain addres of the hotspot by name.\'> Get address from name </a>
     `;
-    
+
     createDataBox('setupBox' + counter, 300, formHTML);
 
     // Get Address link click

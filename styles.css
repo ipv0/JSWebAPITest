@@ -245,7 +245,6 @@ ul {
 }
 
 #dataBoxesDiv {
-     /* border: 1px solid black; */
      margin: 0 auto !important;
      text-align: center;
      
@@ -264,15 +263,23 @@ p.tiny-text {
     font-size: 0.4em;
 }
 
+.data-box-header-name {
+    background-color: #09679212;
+    border-radius: 0 0 3px 3px;
+    margin: -5px;
+    font-size: 17px;;
+    font-weight: bold;
+    font-family: Helvetica;
+}
+
+.spacer {
+    margin: 0 0 8px 0;
+}
+
 .data-box-header {
     margin-top: 0;
     margin-bottom: -10px;
-    /* font-size: 0.8em; */
 }
-
-/* .input-label {
-    text-align: left;
-} */
 
 .dataBox label {
     display: block;
