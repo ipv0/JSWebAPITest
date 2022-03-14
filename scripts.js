@@ -68,7 +68,7 @@ $(document).ready(function () {
 let assignEventListeners = function () {
     p('assignEventListeners func called');
 
-    const weatherLink = document.querySelector('#link-2');
+    // const weatherLink = document.querySelector('#link-2');
     const apiLink = document.querySelector('#link-3');
     const setupLink = document.querySelector('#link-4');
 
@@ -81,7 +81,7 @@ let assignEventListeners = function () {
 
     // when assigning event listener callbacks like that, remember
     // not to put brackets after the  funcktion name, like below
-    weatherLink.addEventListener('click', weatherLinkClick);
+    // weatherLink.addEventListener('click', weatherLinkClick);
 
     setupLink.addEventListener('click', setupLinkClick);
 
