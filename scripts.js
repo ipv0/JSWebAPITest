@@ -179,7 +179,17 @@ function apiLinkClick() {
 function setupLinkClick() {
     p('link4 click');
 
-    createBox("Setup", "<p>Configure which hotspots to keep track of.</>");
+    let topHTML = `
+    <p class=\'setup-page-label\' id='currencyLabel'>Currency: </p>
+        <select id='currencySelector' class='selector' name='currencySelector'>
+            <option value='CAD'>CAD</option>
+            <option value='USD'>USD</option>
+        </select>
+    <p class=\'setup-page-label\' id='setupLabel2'>Configure which hotspots to keep track of.</p>
+    
+    `;
+
+    createBox("Setup", topHTML);
 
     // take that array from local storage
     let fromLocalStorage = JSON.parse(window.localStorage.getItem('hotspots'));

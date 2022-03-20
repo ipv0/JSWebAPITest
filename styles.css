@@ -149,7 +149,7 @@ ul {
 
 .box-content {
     margin: 0 0 5px 0;
-    padding: 2px;
+    padding: 2px 0 10px 0;
     height: auto;
     /* border: 1px solid #304a4b1b; */
 }
@@ -190,6 +190,20 @@ ul {
 
 .button:active {
     background-color:#4095c683;
+}
+
+.setup-page-label {
+    margin: 5px 13px;
+}
+
+#currencyLabel {
+    display: inline-block;
+}
+
+.selector {
+    margin: 0 0 10px -5px;
+    padding: 5px;
+    display: inline;
 }
 
 /* *********************************** Add Hotspot Button *************************** */
@@ -241,7 +255,7 @@ ul {
 
  #reloadHeliumAPIButton {
     display: block;
-    margin: -10px auto 20px auto;
+    margin: -10px auto 10px auto;
 }
 
 #dataBoxesDiv {
