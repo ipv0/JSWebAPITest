@@ -13,7 +13,7 @@ let heliumAPI = {
 }
 
 
-/* Helium Hotspots and their addresses */
+/* Default list of Helium Hotspots and their addresses */
 
 let heliumHotspots = [
     {
@@ -56,6 +56,10 @@ $(document).ready(function () {
     // If nothing is saved in localstorage, put default values in there
     if (!window.localStorage.getItem('hotspots')) {
         window.localStorage.setItem('hotspots', JSON.stringify(heliumHotspots));
+    }
+
+    if (!window.localStorage.getItem('currency')) {
+        window.localStorage.setItem('currency', JSON.stringify(prefs.currency));
     }
 
     assignEventListeners();
@@ -179,13 +183,25 @@ function apiLinkClick() {
 function setupLinkClick() {
     p('link4 click');
 
+    let curr = window.localStorage.getItem('currency');
+    //let curr = 'CAD';
+
+    p(`CURR FROM LS: ${curr}`);
+
+    function checkIfSelected(selectorValue) {
+        if (selectorValue == curr)
+            return 'selected';
+        else
+            return '';
+    }
+
     let topHTML = `
-    <p class=\'setup-page-label\' id='currencyLabel'>Currency: </p>
+    <p class='setup-page-label' id='currencyLabel'>Currency: </p>
         <select id='currencySelector' class='selector' name='currencySelector'>
-            <option value='CAD'>CAD</option>
-            <option value='USD'>USD</option>
+            <option value='CAD' ${checkIfSelected('CAD')}> CAD </option>
+            <option value='USD' ${checkIfSelected('USD')}> USD </option>
         </select>
-    <p class=\'setup-page-label\' id='setupLabel2'>Configure which hotspots to keep track of.</p>
+    <p class='setup-page-label' id='setupLabel2'>Configure which hotspots to keep track of.</p>
     
     `;
 
