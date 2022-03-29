@@ -490,6 +490,10 @@ function updateSettings() {
     let addrFields = document.getElementsByClassName("input-field-addr");
     p(fields);
 
+    // get the currency value from the currency dropdown
+    let currSelectorValue = document.querySelector("#currencySelector").value;
+    p("Selected currency is: " + currSelectorValue);
+
     heliumHotspots = [];
 
     let counter = 0;
@@ -505,6 +509,9 @@ function updateSettings() {
 
     // put the hotspots array of objects into local storage
     window.localStorage.setItem('hotspots', JSON.stringify(heliumHotspots));
+
+    //Save currency value from the selector into localStorage
+    window.localStorage.setItem('currency', currSelectorValue);
 
 }
 
